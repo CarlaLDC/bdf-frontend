@@ -1,29 +1,76 @@
-<section class="container">
-    <div class="produtos">
-
-        <div class="cards">
-
-            <div class="card">
-                <img src="assets/images/castelo.png" alt="Produto 1">
-                <div class="textos">
-                    <h3>Castelo</h3>
-                    <p style="font-weight: 600; color: #369d1a;">R$200</p>
-                    <p>De 3 a 12 Anos</p>
-                    <button class="btn">Comprar</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="assets/images/castelo.png" alt="Produto 1">
-                <div class="textos">
-                    <h3>Castelo</h3>
-                    <p style="font-weight: 600; color: #369d1a;">R$200</p>
-                    <p>De 3 a 12 Anos</p>
-                    <button class="btn">Comprar</button>
-                </div>
-            </div>
-
-            
-        </div>
+<section class="container-produtos">
+  <!-- Filtros -->
+  <aside class="filtros">
+    <h3>Filtrar Produtos</h3>
+ 
+    <div class="filtro-grupo">
+      <h4>Público</h4>
+      <button 
+        (click)="filtrarPorPublico('INFANTIL')"
+        [class.ativo]="publicoSelecionado === 'INFANTIL'">
+        Infantil
+      </button>
+      <button 
+        (click)="filtrarPorPublico('ADULTO')"
+        [class.ativo]="publicoSelecionado === 'ADULTO'">
+        Adulto
+      </button>
+      <button (click)="filtrarPorPublico(null)">Limpar</button>
     </div>
+ 
+    <div class="filtro-grupo">
+      <h4>Tipo</h4>
+      <button (click)="filtrarPorTipo('INFLAVEL')" [class.ativo]="tipoSelecionado === 'INFLAVEL'">
+        Inflável
+      </button>
+      <button (click)="filtrarPorTipo('MECANICA')" [class.ativo]="tipoSelecionado === 'MECANICA'">
+        Mecânico
+      </button>
+      <button (click)="filtrarPorTipo('RECREATIVO')" [class.ativo]="tipoSelecionado === 'RECREATIVO'">
+        Recreativo
+      </button>
+      <button (click)="filtrarPorTipo('ELETRONICO')" [class.ativo]="tipoSelecionado === 'ELETRONICO'">
+        Eletrônico
+      </button>
+      <button (click)="filtrarPorTipo(null)">Limpar</button>
+    </div>
+ 
+    <button (click)="limparFiltros()" class="btn-limpar-tudo">
+      Limpar Tudo
+    </button>
+  </aside>
+ 
+  <!-- Lista de Produtos -->
+  <main class="lista-produtos">
+    <!-- Barra de Busca -->
+    <div class="busca">
+      <input 
+        type="text" 
+        placeholder="Busque por nome..."
+        (keyup)="buscar($any($event.target).value)">
+    </div>
+ 
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading">
+      Carregando produtos...
+    </div>
+ 
+    <!-- Produtos -->
+    <div class="grid-produtos" *ngIf="!loading && produtos.length > 0">
+      <div *ngFor="let produto of produtos" class="card-produto">
+        <img [src]="produto.imagem" [alt]="produto.nome" class="imagem">
+        <h3>{{ produto.nome }}</h3>
+        <p class="tipo">{{ produto.tipo }}</p>
+        <p class="publico">{{ produto.publico }}</p>
+        <p class="preco">R$ {{ produto.preco | number:'1.2-2' }}</p>
+        <button class="btn-detalhes">Ver Detalhes</button>
+      </div>
+    </div>
+ 
+    <!-- Sem resultados -->
+    <div *ngIf="!loading && produtos.length === 0" class="sem-resultados">
+      Nenhum produto encontrado
+    </div>
+  </main>
 </section>
+ 
