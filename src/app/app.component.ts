@@ -8,8 +8,9 @@ import { ProdutosComponent } from './components/produtos/produtos.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [
-    RouterOutlet, 
+    RouterOutlet,
     HeaderComponent,
     HomeComponent,
     FilterComponent,
@@ -17,8 +18,30 @@ import { ProdutosComponent } from './components/produtos/produtos.component';
     ProdutosComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'bdf-frontend';
+
+  publicoSelecionado: string | null = null;
+  tipoSelecionado: string | null = null;
+  nomeBusca: string = '';
+
+  onPublicoChange(publico: string | null) {
+    this.publicoSelecionado = publico;
+  }
+
+  onTipoChange(tipo: string | null) {
+    this.tipoSelecionado = tipo;
+  }
+
+  onBuscarChange(nome: string) {
+    this.nomeBusca = nome;
+  }
+
+  onLimpar() {
+    this.publicoSelecionado = null;
+    this.tipoSelecionado = null;
+    this.nomeBusca = '';
+  }
 }

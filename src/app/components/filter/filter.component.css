@@ -50,3 +50,14 @@ button:hover {
     color: #ffffff;
     cursor: pointer;
 }
+
+.ativo {
+    background-color: #70a9f3;
+    color: #ffffff;
+    box-shadow: 0 6px 12px rgba(7,91,181,0.25);
+    transform: translateY(-1px);
+}
+
+.ativo:hover {
+    background-color: #055fc4;
+}

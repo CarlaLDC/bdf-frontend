@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ProdutoServices } from '../../services/produto/produto.component';
 import { CommonModule } from '@angular/common';
  
@@ -7,21 +7,28 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './produtos.component.html',
-  styleUrl: './produtos.component.css'
+  styleUrls: ['./produtos.component.css']
 })
-export class ProdutosComponent implements OnInit {
+export class ProdutosComponent implements OnInit, OnChanges {
   produtos: any[] = [];
   loading = false;
  
   // Filtros
-  publicoSelecionado: string | null = null;
-  tipoSelecionado: string | null = null;
-  nomeBusca: string = '';
+  @Input() publicoSelecionado: string | null = null;
+  @Input() tipoSelecionado: string | null = null;
+  @Input() nomeBusca: string = '';
  
   constructor(private ProdutoServices: ProdutoServices) {}
  
   ngOnInit() {
     this.carregarProdutos();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // When inputs change, reload products
+    if (changes['publicoSelecionado'] || changes['tipoSelecionado'] || changes['nomeBusca']) {
+      this.carregarProdutos();
+    }
   }
  
   carregarProdutos() {

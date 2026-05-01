@@ -1,6 +1,15 @@
 <app-header></app-header>
 <app-home></app-home>
-<app-filter></app-filter>
-<app-produtos></app-produtos>
+<app-filter
+	(publicoChange)="onPublicoChange($event)"
+	(tipoChange)="onTipoChange($event)"
+	(buscarChange)="onBuscarChange($event)"
+	(limpar)="onLimpar()"
+></app-filter>
+<app-produtos
+	[publicoSelecionado]="publicoSelecionado"
+	[tipoSelecionado]="tipoSelecionado"
+	[nomeBusca]="nomeBusca"
+></app-produtos>
 <app-footer></app-footer>
 
