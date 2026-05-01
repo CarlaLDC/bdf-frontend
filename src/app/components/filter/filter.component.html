@@ -1,26 +1,39 @@
 <section class="container">
-    <div class="publico">
-        <h3>Público</h3>
-
-        <div>
-            <button class="btn-publico">Infantil</button>
-            <button class="btn-publico">Adulto</button>
-        </div>
+    <h3>Filtrar Produtos</h3>
+ 
+    <div class="filtro-grupo">
+      <h3>Público</h3>
+      <button 
+        (click)="filtrarPorPublico('INFANTIL')"
+        [class.ativo]="publicoSelecionado === 'INFANTIL'">
+        Infantil
+      </button>
+      <button 
+        (click)="filtrarPorPublico('ADULTO')"
+        [class.ativo]="publicoSelecionado === 'ADULTO'">
+        Adulto
+      </button>
+      <button (click)="filtrarPorPublico(null)">Limpar</button>
     </div>
-
-    <div class="tipo">
-        <h3>Tipo</h3>
-
-        <div>
-            <button class="btn-tipo">Inflável</button>
-            <button class="btn-tipo">Mecânico</button>
-            <button class="btn-tipo">Recreativo</button>
-            <button class="btn-tipo">Eletrônico</button>
-        </div>
+ 
+    <div class="filtro-grupo">
+      <h3>Tipo</h3>
+      <button (click)="filtrarPorTipo('INFLAVEL')" [class.ativo]="tipoSelecionado === 'INFLAVEL'">
+        Inflável
+      </button>
+      <button (click)="filtrarPorTipo('MECANICA')" [class.ativo]="tipoSelecionado === 'MECANICA'">
+        Mecânico
+      </button>
+      <button (click)="filtrarPorTipo('RECREATIVO')" [class.ativo]="tipoSelecionado === 'RECREATIVO'">
+        Recreativo
+      </button>
+      <button (click)="filtrarPorTipo('ELETRONICO')" [class.ativo]="tipoSelecionado === 'ELETRONICO'">
+        Eletrônico
+      </button>
+      <button (click)="filtrarPorTipo(null)">Limpar</button>
     </div>
-
-    <div class="filtro">
-        <h3>Filtro por preço</h3>
-    </div>
-
+ 
+    <button (click)="limparFiltros()" class="btn-limpar-tudo">
+      Limpar Tudo
+    </button>
 </section>
