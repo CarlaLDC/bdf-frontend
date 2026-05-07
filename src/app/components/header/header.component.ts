@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  menuCarrinhoAberto = false;
 
+  menuCarrinho() {
+    this.menuCarrinhoAberto = !this.menuCarrinhoAberto;
+
+  }
 }
