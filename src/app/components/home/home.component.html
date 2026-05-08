@@ -8,3 +8,16 @@
         <track kind="subtitles" src="/public/assets/video/video-bdf-subtitles.vtt" srclang="en" label="English">
     </video>
 </section>
+
+<app-filter
+    (publicoChange)="onPublicoChange($event)"
+    (tipoChange)="onTipoChange($event)"
+    (buscarChange)="onBuscarChange($event)"
+    (limpar)="onLimpar()"
+></app-filter>
+
+<app-produtos
+    [publicoSelecionado]="publicoSelecionado"
+    [tipoSelecionado]="tipoSelecionado"
+    [nomeBusca]="nomeBusca"
+></app-produtos>

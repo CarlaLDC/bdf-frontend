@@ -1,0 +1,73 @@
+<img src="/assets/images/fundo.png" alt="Background image">
+<main>
+   <section class="title">
+     <h1>Adicionar Produto</h1>
+   </section>
+
+   <section class="primary-container">
+        <h2>Descrição do produto</h2>
+        <textarea name="descricao" id="descricao" placeholder="Brinquedo para..."></textarea>
+
+        <div class="align">
+            <div class="estoque">
+                <label for="estoque">Estoque:</label>
+                <input type="number" name="estoque" id="estoque">
+            </div>
+
+            <div class="status">
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option id="vazio" value=""></option>
+                    <option value="disponivel">Disponível</option>
+                    <option value="indisponivel">Indisponível</option>
+                </select>
+            </div>
+        </div>
+
+        <section class="second-container">
+                <h2>Especificações técnicas:</h2>
+
+                <div class="area">
+                    <label for="area">Área necessária:</label>
+                    <input type="number" name="area" id="area" placeholder="Metros">
+                </div>
+
+                <div class="dimensao">
+                    <label for="dimensao">Dimensão do brinquedo :</label>
+                    <input type="number" name="dimensao" id="dimensao" placeholder="Metros">
+                    x
+                    <input type="number" name="dimensao2" id="dimensao2" placeholder="Metros">
+                </div>
+
+                <div class="energia">
+                    <label for="energia">Requisitos de energia:</label>
+                    <input type="number" name="energia" id="energia" placeholder="Watts">
+                </div>
+
+                <div>
+                    <label for="idade">Faixa etária recomendada:</label>
+                    <input type="number" name="idade" id="idade" placeholder="Anos">
+                </div>
+
+                <div class="alvo">
+                    <label for="alvo">Público-alvo: </label>
+                    <input type="text" name="alvo" id="alvo" placeholder="Descrição do público-alvo">
+                </div>
+
+                <div class="incluso">
+                    <label for="incluso">Itens inclusos: </label>
+                    <input type="text" name="incluso" id="incluso" placeholder="Descrição dos itens inclusos">
+                </div>
+        </section>
+
+        <section class="add-image">
+                <h3>Adicionar Imagem</h3>
+                <input type="file" name="imagem" id="imagem">
+        </section>
+
+        <div class="btn-salvar">
+            <button type="submit">Salvar</button>
+        </div>
+
+    </section>
+</main>

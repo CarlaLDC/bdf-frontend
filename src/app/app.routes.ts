@@ -1,15 +1,12 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FilterComponent } from './components/filter/filter.component';
-import { ProdutosComponent } from './components/produtos/produtos.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { AdicionarProdutoComponent } from './components/adicionar-produto/adicionar-produto.component';
+import { GerenciarProdutoComponent } from './components/gerenciar-produto/gerenciar-produto.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: '', component: HeaderComponent},
-    { path: 'filter', component: FilterComponent },
-    { path: 'produtos', component: ProdutosComponent },
-    { path: '', component: FooterComponent}
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'adicionar-produto', component: AdicionarProdutoComponent },
+  { path: 'gerenciar-produto', component: GerenciarProdutoComponent },
+  { path: '**', redirectTo: '' }
 ];
  
