@@ -1,11 +1,12 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ProdutoServices } from '../../services/produto/produto.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
  
 @Component({
   selector: 'app-produtos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './produtos.component.html',
   styleUrls: ['./produtos.component.css']
 })

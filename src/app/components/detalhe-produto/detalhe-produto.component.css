@@ -1,0 +1,210 @@
+.detalhe-wrapper {
+  margin: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+:host .background-image {
+    display: block;
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+
+    opacity: 0.5;
+}
+
+/* ── Bloco superior ── */
+.detalhe-topo {
+  display: flex;
+  gap: 40px;
+  background: #fff;
+  border: 6px solid #b64646;
+  border-radius: 4px;
+  padding: 24px 32px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.imagem-box img {
+  width: 280px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.nome {
+  font-size: 28px;
+  font-weight: 700;
+  font-style: italic;
+  color: #222;
+  margin: 0 0 4px 0;
+}
+
+.preco {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2e9e2e;
+  margin: 0;
+}
+
+.parcelado {
+  font-size: 13px;
+  color: #2e9e2e;
+  margin: 0 0 8px 0;
+}
+
+.estoque {
+  font-size: 15px;
+  color: #222;
+  margin: 0;
+}
+
+.quantidade-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.qtd-label {
+  font-size: 15px;
+  color: #222;
+}
+
+.quantidade-controle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-qtd {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  background: #fff;
+  border: 2px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-qtd:hover {
+  background: #f0f0f0;
+}
+
+.qtd-valor {
+  font-size: 18px;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+.botoes {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-carrinho {
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  background: #2e9e2e;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-carrinho:hover {
+  background: #247a24;
+}
+
+.btn-reservar {
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  background: #2e7d2e;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-reservar:hover {
+  background: #1f5f1f;
+}
+
+/* ── Bloco inferior ── */
+.detalhe-rodape {
+  background: #fff;
+  border: 4px solid #3a6fbc;
+  border-radius: 4px;
+  padding: 20px 32px;
+}
+
+.descricao-box h3,
+.specs-box h3 {
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.descricao-box p {
+  font-size: 14px;
+  color: #333;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.specs-box p {
+  font-size: 14px;
+  color: #333;
+  margin: 4px 0;
+}
+
+.specs-box ul {
+  margin: 4px 0 0 0;
+  padding-left: 20px;
+}
+
+.specs-box ul li {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.specs-box {
+  margin-top: 16px;
+}
+
+.loading,
+.erro {
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
+  color: #666;
+}
+
+.erro {
+  color: #b64646;
+}
