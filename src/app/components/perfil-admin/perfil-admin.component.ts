@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-perfil-admin',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './login.html',
-  styleUrl: './login.css',
+  templateUrl: './perfil-admin.component.html',
+  styleUrl: './perfil-admin.component.css',
 })
-export class Login {}
+export class PerfilAdmin {}

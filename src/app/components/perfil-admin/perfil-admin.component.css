@@ -141,15 +141,67 @@
   font-weight: 500;
 }
 
-.acoes {
+/* Ações Administrador */
+.acoes-admin {
   display: flex;
   flex-direction: column;
   gap: 12px;
   align-items: center;
 }
 
+.acoes-linha {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-gerenciar {
+  flex: 1;
+  max-width: 260px;
+  padding: 13px;
+  border-radius: 30px;
+  border: none;
+  background-color: #b64646;
+  color: #ffffff;
+  font-family: 'poppins-regular', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(182, 70, 70, 0.25);
+}
+
+.btn-gerenciar:hover {
+  background-color: #a03030;
+  transform: scale(1.02);
+}
+
+.btn-excluir {
+  width: 100%;
+  max-width: 540px;
+  padding: 13px;
+  border-radius: 30px;
+  border: none;
+  background-color: #4673b6;
+  color: #ffffff;
+  font-family: 'poppins-regular', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(70, 115, 182, 0.25);
+}
+
+.btn-excluir:hover {
+  background-color: #3560a0;
+  transform: scale(1.02);
+}
+
 .btn-sair {
   width: 100%;
+  max-width: 540px;
   padding: 13px;
   border-radius: 30px;
   border: none;
@@ -165,24 +217,5 @@
 
 .btn-sair:hover {
   background-color: #3560a0;
-  transform: scale(1.02);
-}
-
-.btn-excluir {
-  width: 100%;
-  padding: 13px;
-  border-radius: 30px;
-  border: 1.5px solid #b64646;
-  background-color: transparent;
-  color: #b64646;
-  font-family: 'poppins-regular', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.btn-excluir:hover {
-  background-color: #fdf0f0;
   transform: scale(1.02);
 }
