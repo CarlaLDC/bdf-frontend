@@ -1,0 +1,23 @@
+<img src="/assets/images/fundo.png" alt="Background image">
+
+<section>
+    <img src="" alt="">
+
+    <video width="100%" height="100%" controls>
+        <source src="/public/assets/video/video-bdf.mp4" type="video/mp4">
+        <track kind="subtitles" src="/public/assets/video/video-bdf-subtitles.vtt" srclang="en" label="English">
+    </video>
+</section>
+
+<app-filter
+    (publicoChange)="onPublicoChange($event)"
+    (tipoChange)="onTipoChange($event)"
+    (buscarChange)="onBuscarChange($event)"
+    (limpar)="onLimpar()"
+></app-filter>
+
+<app-produtos
+    [publicoSelecionado]="publicoSelecionado"
+    [tipoSelecionado]="tipoSelecionado"
+    [nomeBusca]="nomeBusca"
+></app-produtos>

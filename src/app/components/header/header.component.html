@@ -1,0 +1,30 @@
+<section class="cabecalho">
+    <img class="logo" src="assets/images/logo.png" alt="Logo">
+
+    <span class="a-links">
+        <a routerLink="/">Home</a>
+        <a routerLink="/">Minhas Reservas</a>
+        <a routerLink="/sobre-nos">Sobre Nós</a>
+    </span>
+
+    <input class="search" type="text" placeholder="Busque aqui...">
+
+    <button class="btn-perfil" routerLink="/perfil-cliente">Meu Perfil</button>
+
+    <img class="carrinho" src="assets/images/carrinho.png" alt="carrinho" (click)="menuCarrinho()">
+</section>
+
+<aside class="menu-lateral-carrinho" [class.ativo]="menuCarrinhoAberto">
+    <div class="header-carrinho">
+        <button class="btn-fechar" (click)="menuCarrinho()">X</button>
+        <h2>Meu Carrinho</h2>
+    </div>
+
+    <div class="conteudo-carrinho">
+        <p>Seu carrinho está vazio, adicione os itens...</p>
+    </div>
+
+    <div class="footer-carrinho">
+        <button class="btn-checkout">Continua a Reserva</button>
+    </div>
+</aside>

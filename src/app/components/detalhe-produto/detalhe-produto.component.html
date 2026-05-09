@@ -1,0 +1,82 @@
+<img class="background-image" src="/assets/images/fundo.png" alt="Background image">
+
+<div class="detalhe-wrapper">
+
+  <div *ngIf="loading" class="loading">Carregando produto...</div>
+  <div *ngIf="erro" class="erro">{{ erro }}</div>
+
+  <div *ngIf="produto && !loading">
+
+    <!-- Bloco superior: imagem + infos -->
+    <div class="detalhe-topo">
+
+      <div class="imagem-box">
+        <img [src]="produto.imagemUrl || 'assets/images/castelo.png'" [alt]="produto.nome" />
+      </div>
+
+      <div class="info-box">
+        <h2 class="nome">{{ produto.nome }}</h2>
+
+        <p class="preco">R$ {{ produto.preco | number:'1.2-2' }}</p>
+        <p class="parcelado">{{ precoParcelado }}</p>
+
+        <p class="estoque"><strong>Estoque:</strong> {{ produto.estoque }}</p>
+
+        <div class="quantidade-row">
+          <span class="qtd-label"><strong>Quantidade:</strong></span>
+          <div class="quantidade-controle">
+            <button class="btn-qtd" (click)="aumentar()">+</button>
+            <span class="qtd-valor">{{ quantidade }}</span>
+            <button class="btn-qtd" (click)="diminuir()">-</button>
+          </div>
+        </div>
+
+        <div class="botoes">
+          <button class="btn-carrinho" (click)="adicionarCarrinho()">
+            Adicionar no Carrinho
+          </button>
+          <button class="btn-reservar" (click)="reservarAgora()">
+            Reservar agora
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bloco inferior: descrição + especificações -->
+    <div class="detalhe-rodape">
+
+      <div class="descricao-box">
+        <h3>Descrição:</h3>
+        <p>{{ produto.descricao }}</p>
+      </div>
+
+      <div class="specs-box">
+        <h3>Especificações Técnicas:</h3>
+        <p *ngIf="produto.areaNecessaria">
+          <strong>Área Necessária:</strong> {{ produto.areaNecessaria }}
+        </p>
+        <p *ngIf="produto.dimensoes">
+          <strong>Dimensões do Inflável:</strong> {{ produto.dimensoes }}
+        </p>
+        <p *ngIf="produto.requisitosEnergia">
+          <strong>Requisitos de Energia:</strong> {{ produto.requisitosEnergia }}
+        </p>
+        <p *ngIf="produto.capacidadePeso">
+          <strong>Capacidade de Peso:</strong> {{ produto.capacidadePeso }}
+        </p>
+        <p *ngIf="produto.publicoAlvo">
+          <strong>Público-Alvo:</strong> {{ produto.publicoAlvo }}
+        </p>
+        <div *ngIf="itensInclusos.length > 0">
+          <strong>Itens Inclusos:</strong>
+          <ul>
+            <li *ngFor="let item of itensInclusos">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
