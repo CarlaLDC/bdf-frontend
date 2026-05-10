@@ -1,135 +1,97 @@
 <div class="cadastros-container">
 <img src="/assets/images/fundo.png" alt="Background image">
 
-  <div class="cadastros-card">
-    <h2>Criar Conta</h2>
-    <p>Realize seu cadastro no Baú da Felicidade</p>
+  <div class="pagina">
 
+  <!-- Título -->
+  <div class="titulo">
+    <h1>Cadastro</h1>
+  </div>
+
+  <!-- Card -->
+  <div class="card">
+
+    
+    <!-- Formulário -->
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
 
       <!-- Nome e Sobrenome -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="nome">Nome *</label>
-          <input type="text" id="nome" name="nome"
-                 [(ngModel)]="cadastroData.nome"
-                 #nome="ngModel" required minlength="2"
-                 placeholder="Seu nome" />
-          <div *ngIf="nome.touched && nome.invalid" class="error-message">
-            <small *ngIf="nome.errors?.['required']">Nome é obrigatório.</small>
-            <small *ngIf="nome.errors?.['minlength']">Mínimo 2 caracteres.</small>
-          </div>
+      <div class="linha">
+        <div class="campo">
+          <label>Nome:</label>
+          <input type="text" name="nome" [(ngModel)]="cadastroData.nome" required placeholder="Olivia Martha" />
         </div>
-
-        <div class="form-group">
-          <label for="sobrenome">Sobrenome *</label>
-          <input type="text" id="sobrenome" name="sobrenome"
-                 [(ngModel)]="cadastroData.sobrenome"
-                 #sobrenome="ngModel" required minlength="2"
-                 placeholder="Seu sobrenome" />
-          <div *ngIf="sobrenome.touched && sobrenome.invalid" class="error-message">
-            <small *ngIf="sobrenome.errors?.['required']">Sobrenome é obrigatório.</small>
-          </div>
+        <div class="campo">
+          <label>Sobrenome:</label>
+          <input type="text" name="sobrenome" [(ngModel)]="cadastroData.sobrenome" required placeholder="Lima de Andrade" />
         </div>
       </div>
 
       <!-- CPF -->
-      <div class="form-group">
-        <label for="cpf">CPF *</label>
-        <input type="text" id="cpf" name="cpf"
-               [(ngModel)]="cadastroData.cpf"
-               #cpf="ngModel" required
-               placeholder="000.000.000-00"
-               maxlength="14" />
-        <div *ngIf="cpf.touched && cpf.invalid" class="error-message">
-          <small *ngIf="cpf.errors?.['required']">CPF é obrigatório.</small>
+      <div class="linha">
+        <div class="campo">
+          <label>CPF:</label>
+          <input type="text" name="cpf" [(ngModel)]="cadastroData.cpf" required placeholder="XXX.XXX.XXX - XX" maxlength="14" />
         </div>
-      </div>
-
-      <!-- E-mail -->
-      <div class="form-group">
-        <label for="email">E-mail *</label>
-        <input type="email" id="email" name="email"
-               [(ngModel)]="cadastroData.email"
-               #email="ngModel" required email
-               placeholder="seu@email.com"
-               (ngModelChange)="onEmailChange()" />
-        <div *ngIf="email.touched && email.invalid" class="error-message">
-          <small *ngIf="email.errors?.['required']">E-mail é obrigatório.</small>
-          <small *ngIf="email.errors?.['email']">E-mail inválido.</small>
-        </div>
-      </div>
-
-      <!-- Badge de tipo de conta -->
-      <div class="tipo-conta" [class.admin]="isAdmin" [class.cliente]="!isAdmin">
-        <span *ngIf="isAdmin">🔑 Conta de Administrador detectada</span>
-        <span *ngIf="!isAdmin">👤 Conta de Cliente</span>
-      </div>
-
-      <!-- Aviso exclusivo para admin -->
-      <div class="aviso-admin" *ngIf="isAdmin">
-        ⚠️ Emails com <strong>&#64;admbau.com</strong> criam contas de <strong>Administrador</strong>.
-        Administradores têm acesso ao painel de gerenciamento de produtos e reservas.
+        <div class="campo vazio"></div>
       </div>
 
       <!-- Telefone e Celular -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="telefone">Telefone</label>
-          <input type="text" id="telefone" name="telefone"
-                 [(ngModel)]="cadastroData.telefone"
-                 placeholder="(11) XXXX-XXXX" />
+      <div class="linha">
+        <div class="campo">
+          <label>Telefone:</label>
+          <input type="text" name="telefone" [(ngModel)]="cadastroData.telefone" placeholder="XXXXX XXXX" />
         </div>
-
-        <div class="form-group">
-          <label for="celular">Celular</label>
-          <input type="text" id="celular" name="celular"
-                 [(ngModel)]="cadastroData.celular"
-                 placeholder="(11) 9XXXX-XXXX" />
+        <div class="campo">
+          <label>Celular:</label>
+          <input type="text" name="celular" [(ngModel)]="cadastroData.celular" placeholder="+55 (XX) XXXXX XXXX" />
         </div>
       </div>
 
-      <!-- Senha -->
-      <div class="form-group">
-        <label for="senha">Senha *</label>
-        <input type="password" id="senha" name="senha"
-               [(ngModel)]="cadastroData.senha"
-               #senha="ngModel" required minlength="6"
-               placeholder="Mínimo 6 caracteres" />
-        <div *ngIf="senha.touched && senha.invalid" class="error-message">
-          <small *ngIf="senha.errors?.['required']">Senha é obrigatória.</small>
-          <small *ngIf="senha.errors?.['minlength']">Mínimo 6 caracteres.</small>
+      <!-- Email -->
+      <div class="linha">
+        <div class="campo">
+          <label>Email:</label>
+          <input type="email" name="email" [(ngModel)]="cadastroData.email" required
+                 placeholder="oliviamartha@gmail.com"
+                 (ngModelChange)="onEmailChange()" />
+        </div>
+        <div class="campo vazio"></div>
+      </div>
+
+      <!-- Badge de tipo detectado pelo email -->
+      <div class="badge" [class.admin]="isAdmin">
+        <span *ngIf="isAdmin">🔑 Conta de Administrador</span>
+        <span *ngIf="!isAdmin">👤 Conta de Cliente</span>
+      </div>
+
+      <!-- Aviso admin -->
+      <div class="aviso-admin" *ngIf="isAdmin">
+        ⚠️ Emails com <strong>&#64;admbau.com</strong> criam contas de <strong>Administrador</strong>.
+      </div>
+
+      <!-- Senha e Confirma Senha -->
+      <div class="linha">
+        <div class="campo">
+          <label>Senha:</label>
+          <input type="password" name="senha" [(ngModel)]="cadastroData.senha" required minlength="6" placeholder="Digite sua senha" />
+        </div>
+        <div class="campo">
+          <label>Confirma senha:</label>
+          <input type="password" name="confirmaSenha" [(ngModel)]="cadastroData.confirmaSenha" required placeholder="Confirme sua senha" />
         </div>
       </div>
 
-      <!-- Confirmar Senha -->
-      <div class="form-group">
-        <label for="confirmaSenha">Confirmar Senha *</label>
-        <input type="password" id="confirmaSenha" name="confirmaSenha"
-               [(ngModel)]="cadastroData.confirmaSenha"
-               #confirmaSenha="ngModel" required
-               placeholder="Repita a senha" />
-        <div *ngIf="confirmaSenha.touched && confirmaSenha.invalid" class="error-message">
-          <small *ngIf="confirmaSenha.errors?.['required']">Confirmação é obrigatória.</small>
-        </div>
-      </div>
+      <!-- Mensagem de erro -->
+      <div class="msg-erro" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-      <!-- Mensagens -->
-      <div *ngIf="errorMessage" class="error-message global-error">
-        {{ errorMessage }}
-      </div>
-      <div *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
-      </div>
+      <!-- Mensagem de sucesso -->
+      <div class="msg-sucesso" *ngIf="successMessage">{{ successMessage }}</div>
 
       <!-- Botão -->
       <button type="submit" [disabled]="form.invalid || isLoading" [class.btn-admin]="isAdmin">
         {{ isLoading ? 'Cadastrando...' : isAdmin ? 'Cadastrar como Admin' : 'Cadastrar' }}
       </button>
-
-      <div class="login-link">
-        Já tem uma conta? <a routerLink="/login">Faça login</a>
-      </div>
 
     </form>
   </div>

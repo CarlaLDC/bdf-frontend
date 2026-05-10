@@ -13,6 +13,7 @@ import { AuthService } from '../../services/cadastros/auth.service';
 })
 export class CadastrosComponent {
 
+  // Dados do formulário
   cadastroData = {
     nome: '',
     sobrenome: '',
@@ -25,28 +26,28 @@ export class CadastrosComponent {
     tipo: 'CLIENTE'
   };
 
+  // Controle da tela
   isLoading = false;
   errorMessage = '';
   successMessage = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  // Detecta se o email digitado é de admin
+  // Verifica se o email é de administrador
   get isAdmin(): boolean {
     return this.cadastroData.email.toLowerCase().endsWith('@admbau.com');
   }
 
-  // Atualiza o tipo automaticamente conforme o email
+  // Atualiza o tipo quando o email muda
   onEmailChange() {
     this.cadastroData.tipo = this.isAdmin ? 'ADMIN' : 'CLIENTE';
   }
 
+  // Envia o formulário
   onSubmit(form: any): void {
     if (form.invalid) return;
 
+    // Verifica se as senhas coincidem
     if (this.cadastroData.senha !== this.cadastroData.confirmaSenha) {
       this.errorMessage = 'As senhas não coincidem!';
       return;
@@ -55,8 +56,9 @@ export class CadastrosComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
+    // Chama o AuthService para enviar ao backend
     this.authService.register(this.cadastroData).subscribe({
-      next: (res: any) => {
+      next: () => {
         this.isLoading = false;
         this.successMessage = this.isAdmin
           ? 'Administrador cadastrado com sucesso!'
@@ -68,13 +70,12 @@ export class CadastrosComponent {
         if (err.error?.message) {
           this.errorMessage = err.error.message;
         } else if (err.status === 400) {
-          this.errorMessage = 'Dados inválidos. Verifique os campos e tente novamente.';
+          this.errorMessage = 'Dados inválidos. Verifique os campos.';
         } else if (err.status === 0) {
-          this.errorMessage = 'Não foi possível conectar ao servidor. Verifique se o backend está rodando.';
+          this.errorMessage = 'Servidor fora do ar. Verifique se o backend está rodando.';
         } else {
-          this.errorMessage = 'Erro ao realizar cadastro. Tente novamente.';
+          this.errorMessage = 'Erro ao cadastrar. Tente novamente.';
         }
-        console.error('Erro no cadastro:', err);
       }
     });
   }

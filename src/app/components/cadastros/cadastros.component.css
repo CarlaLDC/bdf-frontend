@@ -11,8 +11,12 @@
     opacity: 0.5;
 }
 
-.cadastros-container {
+
+
+/* ── Fundo da página ── */
+.pagina {
   min-height: 80vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,74 +24,66 @@
   padding-bottom: 40px;
 }
 
-/* ── Título "Cadastro" com borda vermelha ── */
-.cadastros-container::before {
-  content: 'Cadastro';
-  display: block;
+/* ── Título com borda vermelha ── */
+.titulo {
   width: 100%;
   background: #fff;
   border: 3px solid #c0392b;
-  border-radius: 4px;
   text-align: center;
   padding: 14px 0;
-  font-size: 26px;
-  font-weight: 700;
-  font-style: italic;
-  color: #222;
   margin-bottom: 24px;
   box-sizing: border-box;
 }
 
+.titulo h1 {
+  font-size: 26px;
+  font-style: italic;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+
 /* ── Card com borda azul ── */
-.cadastros-card {
+.card {
   background: #fff;
   border: 3px solid #1a5fa8;
   border-radius: 8px;
   padding: 32px 40px;
   width: 100%;
   max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
-/* ── Esconde h2 e p do HTML (substituídos pelo CSS) ── */
-.cadastros-card h2,
-.cadastros-card > p {
-  display: none;
-}
 
-/* ── Logo centralizada no topo do card ── */
-.cadastros-card::before {
-  content: '';
-  display: block;
-  width: 120px;
-  height: 120px;
-  background-image: url('/assets/images/logo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 0 auto 24px auto;
-}
 
 /* ── Formulário ── */
 form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* ── Linhas lado a lado ── */
-.form-row {
+/* ── Linhas com dois campos ── */
+.linha {
   display: flex;
   gap: 20px;
-  align-items: flex-start;
 }
 
-/* ── Grupo de campo ── */
-.form-group {
+/* ── Cada campo (label + input) ── */
+.campo {
   display: flex;
   align-items: center;
   gap: 8px;
   flex: 1;
-  flex-wrap: wrap;
+}
+
+/* Campo vazio só para ocupar espaço ── */
+.campo.vazio {
+  flex: 1;
 }
 
 label {
@@ -99,15 +95,12 @@ label {
 
 input {
   flex: 1;
-  min-width: 0;
   padding: 6px 10px;
   border: 1px solid #aaa;
   border-radius: 4px;
   font-size: 13px;
   font-family: 'Poppins', sans-serif;
-  color: #333;
   outline: none;
-  transition: border 0.2s;
 }
 
 input:focus {
@@ -118,99 +111,23 @@ input::placeholder {
   color: #bbb;
 }
 
-/* ── Mensagens de erro por campo ── */
-.error-message {
-  width: 100%;
-  color: #c0392b;
-  font-size: 11px;
-  margin-top: 2px;
-}
-
-/* ── Erro global ── */
-.error-message.global-error {
-  background: #ffe0e0;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 13px;
-  text-align: center;
-  color: #c0392b;
-}
-
-/* ── Mensagem de sucesso ── */
-.success-message {
-  background: #e0ffe0;
-  color: #27ae60;
-  border-radius: 4px;
-  padding: 8px 12px;
-  font-size: 13px;
-  text-align: center;
-}
-
-/* ── Botão Cadastrar ── */
-button[type="submit"] {
-  display: block;
-  margin: 10px auto 0 auto;
-  background: #1a5fa8;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 60px;
-  font-size: 15px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button[type="submit"]:hover {
-  background: #154d8a;
-}
-
-button[type="submit"]:disabled {
-  background: #aaa;
-  cursor: not-allowed;
-}
-
-/* ── Link já tenho conta ── */
-.login-link {
-  text-align: center;
-  font-size: 13px;
-  color: #555;
-  margin-top: 12px;
-}
-
-.login-link a {
-  color: #1a5fa8;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.login-link a:hover {
-  text-decoration: underline;
-}
-
 /* ── Badge tipo de conta ── */
-.tipo-conta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
+.badge {
+  text-align: center;
+  padding: 6px 16px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
-  transition: all 0.3s;
-}
-
-.tipo-conta.cliente {
   background: #e8f4fd;
   color: #1a5fa8;
   border: 1px solid #1a5fa8;
+  align-self: center;
 }
 
-.tipo-conta.admin {
+.badge.admin {
   background: #fff3cd;
   color: #856404;
-  border: 1px solid #ffc107;
+  border-color: #ffc107;
 }
 
 /* ── Aviso admin ── */
@@ -221,10 +138,52 @@ button[type="submit"]:disabled {
   padding: 10px 14px;
   font-size: 12px;
   color: #856404;
-  line-height: 1.6;
 }
 
-/* ── Botão admin ── */
+/* ── Mensagem de erro ── */
+.msg-erro {
+  background: #ffe0e0;
+  color: #c0392b;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ── Mensagem de sucesso ── */
+.msg-sucesso {
+  background: #e0ffe0;
+  color: #27ae60;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ── Botão ── */
+button {
+  display: block;
+  margin: 8px auto 0 auto;
+  background: #1a5fa8;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 60px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #154d8a;
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
 button.btn-admin {
   background: #856404;
 }
