@@ -2,14 +2,15 @@
     <img class="logo" src="assets/images/logo.png" alt="Logo">
 
     <span class="a-links">
-        <a routerLink="/">Home</a>
-        <a routerLink="/">Minhas Reservas</a>
-        <a routerLink="/">Sobre Nós</a>
+        <a routerLink="/home">Home</a>
+        <a [routerLink]="['/reservas']">Minhas Reservas</a>
+        <a [routerLink]="['/sobre-nos']">Sobre Nós</a>
     </span>
 
     <input class="search" type="text" placeholder="Busque aqui...">
 
-    <button class="btn-perfil">Meu Perfil</button>
+        <button class="btn-perfil" routerLink="/cadastros">Fazer Cadastro</button>
+
 
     <img class="carrinho" src="assets/images/carrinho.png" alt="carrinho" (click)="menuCarrinho()">
 </section>

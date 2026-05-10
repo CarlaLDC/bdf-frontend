@@ -8,6 +8,7 @@ import { SobreNos } from './components/sobre-nos/sobre-nos';
 import { PerfilCliente } from './components/perfil-cliente/perfil-cliente';
 import { PerfilAdmin } from './components/perfil-admin/perfil-admin.component';
 import { Login } from './components/login/login';
+import { CadastrosComponent } from './components/cadastros/cadastros.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'perfil-cliente', component: PerfilCliente },
   { path: 'perfil-admin', component: PerfilAdmin },
   { path: 'login', component: Login },
-  { path: '**', redirectTo: '' }
+ { path: 'cadastros', component: CadastrosComponent },
+   { path: '**', redirectTo: '' }
 ];
