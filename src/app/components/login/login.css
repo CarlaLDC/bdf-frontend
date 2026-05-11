@@ -136,6 +136,12 @@
   transform: scale(1.02);
 }
 
+.btn-entrar:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
 .btn-cadastrar {
   width: 100%;
   padding: 13px;
@@ -153,4 +159,16 @@
 .btn-cadastrar:hover {
   background-color: #e8f1fc;
   transform: scale(1.02);
+}
+
+.mensagem-erro {
+  background: #f8e7e7;
+  border-radius: 8px;
+  color: #b64646;
+  font-family: 'poppins-regular', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
 }

@@ -14,7 +14,7 @@
           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
         <span class="avatar-fallback">👤</span>
       </div>
-      <h2 class="nome-usuario">Thiago Marangoni</h2>
+      <h2 class="nome-usuario">{{ nome }}</h2>
       <span class="badge-tipo">Administrador</span>
     </div>
 
@@ -27,11 +27,11 @@
       </div>
       <div class="info-item">
         <span class="info-label">CPF</span>
-        <span class="info-valor">000.000.000-00</span>
+        <span class="info-valor">{{ cpf }}</span>
       </div>
       <div class="info-item">
         <span class="info-label">E-mail</span>
-        <span class="info-valor">tmarangoni&#64;admbau.com</span>
+        <span class="info-valor">{{ email }}</span>
       </div>
     </div>
 

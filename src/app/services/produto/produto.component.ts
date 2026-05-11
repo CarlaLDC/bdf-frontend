@@ -56,6 +56,11 @@ export class ProdutoServices {
     return this.http.put(`${this.apiUrl}/${id}`, produto, this.getHeaders());
   }
 
+  // 5️⃣ Excluir produto
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, this.getHeaders());
+  }
+
   private getHeaders(): { headers: HttpHeaders } {
     const token = localStorage.getItem('token');
     const headers: Record<string, string> = {

@@ -13,11 +13,15 @@ import { RouterModule } from '@angular/router';
 export class ProdutosComponent implements OnInit, OnChanges {
   produtos: any[] = [];
   loading = false;
+  erro = '';
+  mensagem = '';
+  excluindoId: number | null = null;
  
   // Filtros
   @Input() publicoSelecionado: string | null = null;
   @Input() tipoSelecionado: string | null = null;
   @Input() nomeBusca: string = '';
+  @Input() modoGerenciamento = false;
  
   constructor(private ProdutoServices: ProdutoServices) {}
  
@@ -34,6 +38,7 @@ export class ProdutosComponent implements OnInit, OnChanges {
  
   carregarProdutos() {
     this.loading = true;
+    this.erro = '';
     
     this.ProdutoServices.getProducts(
       this.publicoSelecionado || undefined,
@@ -46,7 +51,30 @@ export class ProdutosComponent implements OnInit, OnChanges {
       },
       error: (error) => {
         console.error('Erro ao carregar produtos:', error);
+        this.erro = 'Nao foi possivel carregar os produtos.';
         this.loading = false;
+      }
+    });
+  }
+
+  excluirProduto(produto: any) {
+    const confirmou = confirm(`Deseja excluir o produto "${produto.nome}"?`);
+    if (!confirmou) return;
+
+    this.excluindoId = produto.id;
+    this.erro = '';
+    this.mensagem = '';
+
+    this.ProdutoServices.deleteProduct(produto.id).subscribe({
+      next: () => {
+        this.produtos = this.produtos.filter((item) => item.id !== produto.id);
+        this.excluindoId = null;
+        this.mensagem = 'Produto excluido com sucesso.';
+      },
+      error: (error) => {
+        console.error('Erro ao excluir produto:', error);
+        this.excluindoId = null;
+        this.erro = 'Nao foi possivel excluir o produto.';
       }
     });
   }
