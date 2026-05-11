@@ -9,17 +9,19 @@ import { PerfilCliente } from './components/perfil-cliente/perfil-cliente';
 import { PerfilAdmin } from './components/perfil-admin/perfil-admin.component';
 import { Login } from './components/login/login';
 import { CadastrosComponent } from './components/cadastros/cadastros.component';
+import { MinhasReservasComponent } from './components/minhas-reservas/minhas-reservas.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'adicionar-produto', component: AdicionarProdutoComponent },
   { path: 'gerenciar-produto', component: GerenciarProdutoComponent },
-    { path: 'produtos', component: ProdutosComponent },
-    { path: 'produto/:id', component: ProdutoDetalheComponent },
+  { path: 'produtos', component: ProdutosComponent },
+  { path: 'produto/:id', component: ProdutoDetalheComponent },
   { path: 'sobre-nos', component: SobreNos },
   { path: 'perfil-cliente', component: PerfilCliente },
   { path: 'perfil-admin', component: PerfilAdmin },
   { path: 'login', component: Login },
- { path: 'cadastros', component: CadastrosComponent },
-   { path: '**', redirectTo: '' }
+  { path: 'cadastros', component: CadastrosComponent },
+  { path: 'minhas-reservas', component: MinhasReservasComponent },
+  { path: '**', redirectTo: '' }
 ];

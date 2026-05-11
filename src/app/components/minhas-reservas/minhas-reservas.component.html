@@ -1,0 +1,61 @@
+<div class="container-reservas">
+  
+  <div class="cabecalho-pagina">
+    <h2>Minhas Reservas</h2>
+  </div>
+
+  <p *ngIf="erro" class="mensagem-erro">{{ erro }}</p>
+  <p *ngIf="reservas.length === 0 && !erro" class="mensagem-vazia">Você ainda não possui reservas.</p>
+
+  <div class="reserva-card" *ngFor="let reserva of reservas">
+    
+    <div class="card-header">
+      <h3>Reserva #{{ reserva.id.toString().padStart(5, '0') }}</h3>
+      <span class="status-badge" 
+            [ngClass]="{'status-confirmado': reserva.status === 'CONFIRMADO', 'status-cancelado': reserva.status === 'CANCELADO'}">
+        {{ reserva.status | titlecase }}
+      </span>
+    </div>
+
+    <div class="info-importante">
+      <p class="titulo-secao">Informações importante:</p>
+      
+      <div class="info-item">
+        <span class="icone">📅</span>
+        <p><strong>Data:</strong> {{ reserva.dataEvento }}</p>
+      </div>
+
+      <div class="info-item">
+        <span class="icone">📍</span>
+        <p><strong>Endereço do Evento:</strong> {{ reserva.enderecoEvento }}</p>
+      </div>
+
+      <div class="info-item">
+        <span class="icone">🕒</span>
+        <p><strong>Horários:</strong> Montagem - {{ reserva.horarioMontagem }} e Retirada - {{ reserva.horarioRetirada }}</p>
+      </div>
+    </div>
+
+    <div class="brinquedos-secao">
+      <p class="titulo-secao">Brinquedos:</p>
+      
+      <div class="brinquedo-item" *ngFor="let item of reserva.itens">
+        <img [src]="item.imagemUrl" [alt]="item.produtoNome" class="img-brinquedo" onerror="this.src='assets/placeholder.jpg'">
+        <div class="detalhes-brinquedo">
+          <p class="nome-qtd"><strong>{{ item.quantidade }}X {{ item.produtoNome }}</strong></p>
+          <p class="preco">{{ (item.precoUnitario * item.quantidade) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rodape-card">
+      <p class="texto-aviso">Ciente de que, em caso de cancelamento com menos de 3 (três) dias antes da festa, poderá haver cobrança de multa.</p>
+      <button class="btn-cancelar" 
+              (click)="cancelarReserva(reserva.id)"
+              [disabled]="reserva.status === 'CANCELADO'">
+        Cancelar a reserva
+      </button>
+    </div>
+
+  </div>
+</div>
