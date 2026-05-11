@@ -2,10 +2,19 @@
 
 <main>
   <section class="title">
-    <h1>Adicionar Produto</h1>
+    <h1>Editar Produto</h1>
   </section>
 
-  <form #produtoForm="ngForm" class="primary-container" (ngSubmit)="salvar(produtoForm)" novalidate>
+  <section class="primary-container" *ngIf="carregando">
+    <p class="mensagem estado">Carregando produto...</p>
+  </section>
+
+  <form
+    #produtoForm="ngForm"
+    class="primary-container"
+    *ngIf="!carregando"
+    (ngSubmit)="salvar(produtoForm)"
+    novalidate>
     <div class="mensagem sucesso" *ngIf="mensagem">{{ mensagem }}</div>
     <div class="mensagem erro" *ngIf="erro">{{ erro }}</div>
 
@@ -145,7 +154,7 @@
           >
         </div>
         <div class="campo">
-          <label for="imagem">Escolher arquivo local</label>
+          <label for="imagem">Trocar por arquivo local</label>
           <input type="file" name="imagem" id="imagem" accept="image/*" (change)="selecionarImagem($event)">
           <span *ngIf="nomeArquivoImagem">{{ nomeArquivoImagem }}</span>
         </div>
@@ -155,9 +164,11 @@
     </section>
 
     <div class="btn-salvar">
-      <button type="button" routerLink="/gerenciar-produto" class="secundario">Cancelar</button>
+      <button type="button" [routerLink]="produtoId ? ['/produto', produtoId] : ['/produtos']" class="secundario">
+        Cancelar
+      </button>
       <button type="submit" [disabled]="salvando">
-        {{ salvando ? 'Salvando...' : 'Salvar' }}
+        {{ salvando ? 'Salvando...' : 'Atualizar' }}
       </button>
     </div>
   </form>

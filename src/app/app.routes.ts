@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AdicionarProdutoComponent } from './components/adicionar-produto/adicionar-produto.component';
+import { EditarProdutoComponent } from './components/editar-produto/editar-produto.component';
 import { GerenciarProdutoComponent } from './components/gerenciar-produto/gerenciar-produto.component';
 import { ProdutosComponent } from './components/produtos/produtos.component';
 import { ProdutoDetalheComponent } from './components/detalhe-produto/detalhe-produto.component';
@@ -14,6 +15,7 @@ import { MinhasReservasComponent } from './components/minhas-reservas/minhas-res
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'adicionar-produto', component: AdicionarProdutoComponent },
+  { path: 'editar-produto/:id', component: EditarProdutoComponent },
   { path: 'gerenciar-produto', component: GerenciarProdutoComponent },
   { path: 'produtos', component: ProdutosComponent },
   { path: 'produto/:id', component: ProdutoDetalheComponent },

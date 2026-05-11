@@ -8,7 +8,7 @@
     <div class="cards" *ngIf="!loading && produtos.length > 0">
       <div *ngFor="let produto of produtos" class="card">
 
-        <img [src]="'assets/images/' + produto.imagem" [alt]="produto.nome" class="img">
+        <img [src]="imagemProduto(produto)" [alt]="produto.nome" class="img">
 
         <h3 class="textos">{{ produto.nome }}</h3>
 

@@ -1,15 +1,334 @@
+main {
+    font-family: 'Poppins', sans-serif;
+}
 
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.pagina-gerenciar {
+  font-family: 'Poppins', sans-serif;
+  padding: 18px 20px 26px;
+}
 
-    border: 10px solid #b64646;
-    background-color: #ffffff;
-    box-shadow: 0 5px 10px #0000001a;
+.painel-reservas {
+  min-height: 820px;
+  background: #ffffff;
+  border: 6px solid #4b96c1;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px #00000033;
+  padding: 18px 66px 68px;
+}
 
-    margin: 40px 20px;
-    width: 96.5%;
-    height: 400px;
+.painel-reservas h1 {
+  color: #000000;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 44px;
+  text-align: center;
+}
 
+.reserva-card {
+  position: relative;
+  background: #ffffff;
+  border: 6px solid #b64646;
+  border-radius: 8px;
+  box-shadow: 0 5px 9px #00000033;
+  margin: 0 auto 36px;
+  min-height: 520px;
+  padding: 22px 48px 36px;
+}
+
+.reserva-topo {
+  align-items: flex-start;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  padding-right: 70px;
+}
+
+.reserva-topo h2 {
+  color: #000000;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.reserva-topo h2 strong {
+  font-style: italic;
+  font-weight: 800;
+}
+
+.status {
+  border: 2px solid #4b96c1;
+  border-radius: 16px;
+  color: #4b96c1;
+  font-size: 14px;
+  font-weight: 800;
+  margin-top: 12px;
+  padding: 3px 12px;
+  white-space: nowrap;
+}
+
+.status-confirmado {
+  border-color: #008000;
+  color: #008000;
+}
+
+.status-cancelado {
+  border-color: #b64646;
+  color: #b64646;
+}
+
+.botao-lixeira {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  font-size: 46px;
+  height: 60px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 56px;
+  top: 30px;
+  width: 60px;
+}
+
+.botao-lixeira:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.info-reserva h3,
+.brinquedos h3 {
+  color: #000000;
+  font-size: 22px;
+  font-weight: 400;
+  margin: 14px 0 18px;
+}
+
+.linha-info {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.linha-info p {
+  color: #000000;
+  font-size: 20px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.linha-info strong {
+  font-weight: 800;
+}
+
+.icone-info {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 38px;
+  font-size: 34px;
+  font-weight: 800;
+  height: 38px;
+  justify-content: center;
+  line-height: 1;
+  width: 38px;
+}
+
+.calendario {
+  color: #68b1ff;
+}
+
+.local {
+  color: #209ec4;
+}
+
+.relogio {
+  color: #3d628c;
+}
+
+.brinquedos {
+  margin-top: 8px;
+}
+
+.brinquedos h3 {
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.produto {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  margin: 0 0 18px 8px;
+}
+
+.produto img {
+  border-radius: 6px;
+  height: 92px;
+  object-fit: cover;
+  width: 92px;
+}
+
+.detalhes p {
+  color: #000000;
+  font-size: 28px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.detalhes strong {
+  font-weight: 800;
+}
+
+.preco {
+  color: #008000;
+  display: block;
+  font-size: 28px;
+  line-height: 1.05;
+}
+
+.acoes {
+  align-items: center;
+  display: grid;
+  gap: 54px;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  margin-top: 42px;
+  padding: 0 28px;
+}
+
+.acoes button {
+  border: 2px solid #4b96c1;
+  border-radius: 18px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 32px;
+  font-weight: 800;
+  height: 40px;
+  line-height: 1;
+  padding: 0 18px 3px;
+}
+
+.acoes button:hover:not(:disabled) {
+  filter: brightness(0.94);
+  transform: translateY(-1px);
+}
+
+.acoes button:disabled,
+.botao-lixeira:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.confirmar {
+  background: #008000;
+}
+
+.finalizar {
+  background: #1e70a5;
+}
+
+.cancelar {
+  background: #b64646;
+}
+
+.mensagem-estado,
+.mensagem-sucesso,
+.mensagem-erro {
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 auto 22px;
+  max-width: 900px;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.mensagem-estado {
+  background: #eef6fb;
+  color: #1e70a5;
+}
+
+.mensagem-sucesso {
+  background: #e6f5e6;
+  color: #008000;
+}
+
+.mensagem-erro {
+  background: #f8e7e7;
+  color: #b64646;
+}
+
+@media (max-width: 1100px) {
+  .painel-reservas {
+    padding: 18px 24px 48px;
+  }
+
+  .reserva-topo h2 {
+    font-size: 32px;
+  }
+
+  .acoes {
+    gap: 20px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .pagina-gerenciar {
+    padding: 12px;
+  }
+
+  .painel-reservas {
+    border-width: 4px;
+    min-height: 0;
+    padding: 16px 12px 32px;
+  }
+
+  .painel-reservas h1 {
+    font-size: 30px;
+    margin-bottom: 24px;
+  }
+
+  .reserva-card {
+    border-width: 4px;
+    padding: 18px 16px 24px;
+  }
+
+  .reserva-topo {
+    flex-direction: column;
+    padding-right: 48px;
+  }
+
+  .reserva-topo h2 {
+    font-size: 26px;
+  }
+
+  .botao-lixeira {
+    font-size: 34px;
+    right: 14px;
+    top: 18px;
+  }
+
+  .linha-info p,
+  .info-reserva h3,
+  .brinquedos h3 {
+    font-size: 18px;
+  }
+
+  .detalhes p,
+  .preco {
+    font-size: 22px;
+  }
+
+  .produto img {
+    height: 76px;
+    width: 76px;
+  }
+
+  .acoes {
+    grid-template-columns: 1fr;
+    margin-top: 26px;
+  }
 }

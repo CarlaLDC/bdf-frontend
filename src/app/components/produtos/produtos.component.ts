@@ -72,5 +72,12 @@ export class ProdutosComponent implements OnInit, OnChanges {
     this.nomeBusca = '';
     this.carregarProdutos();
   }
+
+  imagemProduto(produto: any): string {
+    const imagem = produto?.imagemUrl || produto?.imagem;
+    if (!imagem) return 'assets/images/castelo.png';
+    if (imagem.startsWith('http') || imagem.startsWith('assets/') || imagem.startsWith('data:')) return imagem;
+    return `assets/images/${imagem}`;
+  }
 }
  

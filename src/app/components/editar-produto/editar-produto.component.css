@@ -1,4 +1,4 @@
-agor:host {
+:host {
   display: block;
   min-height: 100vh;
   position: relative;
@@ -54,7 +54,6 @@ h2 {
   border: 5px solid #469ab6;
   border-radius: 5px;
   background-color: #ffffff;
-  
 }
 
 .form-grid {
@@ -154,6 +153,12 @@ input[type="file"] {
   padding: 12px 14px;
   border-radius: 5px;
   font-weight: 700;
+}
+
+.mensagem.estado {
+  color: #2d6171;
+  background-color: #eaf6fa;
+  border: 1px solid #9bd0df;
 }
 
 .mensagem.sucesso {

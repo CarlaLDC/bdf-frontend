@@ -1,6 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+export interface ProdutoPayload {
+  nome: string;
+  descricao: string;
+  preco: number;
+  estoque: number;
+  status: string;
+  tipo: string;
+  publico: string;
+  imagem?: string;
+  imagemUrl?: string;
+  areaNecessaria?: string;
+  dimensoes?: string;
+  requisitosEnergia?: string;
+  faixaEtaria?: string;
+  publicoAlvo?: string;
+  itensInclusos?: string;
+}
  
 @Injectable({
   providedIn: 'root'  // Disponível em toda a aplicação
@@ -26,6 +44,31 @@ export class ProdutoServices {
   // 2️⃣ Buscar produto por ID
   getProductById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);  // ← GET /api/products/1
+  }
+
+  // 3️⃣ Criar produto
+  createProduct(produto: ProdutoPayload): Observable<any> {
+    return this.http.post(this.apiUrl, produto, this.getHeaders());
+  }
+
+  // 4️⃣ Atualizar produto
+  updateProduct(id: number, produto: ProdutoPayload): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, produto, this.getHeaders());
+  }
+
+  private getHeaders(): { headers: HttpHeaders } {
+    const token = localStorage.getItem('token');
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return {
+      headers: new HttpHeaders(headers)
+    };
   }
 }
  

@@ -1,40 +1,98 @@
-<section>
-    <span>
-        <h1>Gerenciar Produtos</h1>
-    </span>
+<main class="pagina-gerenciar">
+  <section class="painel-reservas">
+    <h1>Reserva do Cliente</h1>
 
-    <section class="container">
-        <h2>Reserva - vai ser aparecer n e nome</h2>
+    <p *ngIf="carregando" class="mensagem-estado">Carregando reservas...</p>
+    <p *ngIf="mensagem" class="mensagem-sucesso">{{ mensagem }}</p>
+    <p *ngIf="erro" class="mensagem-erro">{{ erro }}</p>
+    <p *ngIf="!carregando && reservas.length === 0 && !erro" class="mensagem-estado">
+      Nenhuma reserva cadastrada no banco de dados.
+    </p>
 
-        <div class="excluir">
-            <img src="" alt="">
-        </div>
-        
+    <article class="reserva-card" *ngFor="let reserva of reservas">
+      <button
+        class="botao-lixeira"
+        type="button"
+        title="Cancelar reserva"
+        aria-label="Cancelar reserva"
+        (click)="cancelarReserva(reserva)"
+        [disabled]="!podeCancelar(reserva) || processandoId === reserva.id">
+        🗑
+      </button>
+
+      <header class="reserva-topo">
+        <h2>
+          <strong>Reserva {{ formatarNumeroReserva(reserva) }}</strong>
+          <span>- {{ reserva.clienteNome || reserva.clienteEmail }}</span>
+        </h2>
+        <span class="status" [class.status-confirmado]="reserva.status === 'CONFIRMADO'" [class.status-cancelado]="reserva.status === 'CANCELADO'">
+          {{ reserva.status }}
+        </span>
+      </header>
+
+      <section class="info-reserva" aria-label="Informacoes importantes da reserva">
         <h3>Informações importante:</h3>
 
-        <h4>Data:</h4>
-        <h4>Endereço do Evento:</h4>
-        <h4>Horários:</h4>
-
-        <h4>Brinquedos:</h4>
-
-        <div class="produto">
-            <img src="path/to/product/image.jpg" alt="Produto">
-            <div class="detalhes">
-                <h5> qtd parameter </h5>
-                <h5> nome do produto parameter </h5>
-                <div class="preco">
-                    <h5> preco parameter </h5>
-                </div>
-            </div>    
+        <div class="linha-info">
+          <span class="icone-info calendario" aria-hidden="true">▦</span>
+          <p><strong>Data:</strong> {{ reserva.dataEvento | date:'dd/MM/yyyy':'UTC' }}</p>
         </div>
 
-        <div class="botao">
-            <button>Confirmar</button>
-            <button>Finalizar</button>
-            <button>Cancelar</button>
+        <div class="linha-info">
+          <span class="icone-info local" aria-hidden="true">⌖</span>
+          <p><strong>Endereço do Evento:</strong> {{ enderecoCompleto(reserva) }}</p>
         </div>
 
-    </section>
+        <div class="linha-info">
+          <span class="icone-info relogio" aria-hidden="true">◴</span>
+          <p>
+            <strong>Horários:</strong>
+            Montagem - {{ reserva.horarioMontagem }} e Retirada - {{ reserva.horarioDesmontagem }}
+          </p>
+        </div>
+      </section>
 
-</section>
+      <section class="brinquedos">
+        <h3>Brinquedos:</h3>
+
+        <div class="produto" *ngFor="let item of reserva.items">
+          <img
+            [src]="imagemProduto(item)"
+            [alt]="item.productNome"
+            (error)="atualizarImagem($event)">
+
+          <div class="detalhes">
+            <p><strong>{{ item.quantidade }}X</strong> {{ item.productNome }}</p>
+            <strong class="preco">{{ item.subtotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</strong>
+          </div>
+        </div>
+      </section>
+
+      <footer class="acoes">
+        <button
+          class="confirmar"
+          type="button"
+          (click)="confirmarReserva(reserva)"
+          [disabled]="!podeConfirmar(reserva) || processandoId === reserva.id">
+          Confirmar
+        </button>
+
+        <button
+          class="finalizar"
+          type="button"
+          (click)="finalizarReserva(reserva)"
+          [disabled]="!podeFinalizar(reserva) || processandoId === reserva.id">
+          Finalizar
+        </button>
+
+        <button
+          class="cancelar"
+          type="button"
+          (click)="cancelarReserva(reserva)"
+          [disabled]="!podeCancelar(reserva) || processandoId === reserva.id">
+          Cancelar
+        </button>
+      </footer>
+    </article>
+  </section>
+</main>
