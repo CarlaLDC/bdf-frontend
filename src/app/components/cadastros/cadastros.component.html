@@ -31,7 +31,7 @@
       <div class="linha">
         <div class="campo">
           <label>CPF:</label>
-          <input type="text" name="cpf" [(ngModel)]="cadastroData.cpf" required placeholder="XXX.XXX.XXX - XX" maxlength="14" />
+          <input type="text" name="cpf" [(ngModel)]="cadastroData.cpf" (input)="formatarCPF($event)" required placeholder="XXX.XXX.XXX - XX" maxlength="14" />
         </div>
         <div class="campo vazio"></div>
       </div>

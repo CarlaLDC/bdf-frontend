@@ -16,7 +16,7 @@
     opacity: 0.5;
 }
 
-/* ── Bloco superior ── */
+
 .detalhe-topo {
   display: flex;
   gap: 40px;
@@ -152,7 +152,7 @@
   background: #1f5f1f;
 }
 
-/* ── Bloco inferior ── */
+/* ------------------------------------------------- */
 .detalhe-rodape {
   background: #fff;
   border: 4px solid #3a6fbc;

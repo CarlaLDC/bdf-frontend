@@ -12,6 +12,7 @@ import { PerfilAdmin } from './components/perfil-admin/perfil-admin.component';
 import { Login } from './components/login/login';
 import { CadastrosComponent } from './components/cadastros/cadastros.component';
 import { MinhasReservasComponent } from './components/minhas-reservas/minhas-reservas.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -28,5 +29,6 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'cadastros', component: CadastrosComponent },
   { path: 'minhas-reservas', component: MinhasReservasComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: '**', redirectTo: '' }
 ];

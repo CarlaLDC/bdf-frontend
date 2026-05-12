@@ -13,7 +13,7 @@ import { AuthService } from '../../services/cadastros/auth.service';
 })
 export class CadastrosComponent {
 
-  // Dados do formulário
+  
   cadastroData = {
     nome: '',
     sobrenome: '',
@@ -38,16 +38,36 @@ export class CadastrosComponent {
     return this.cadastroData.email.toLowerCase().endsWith('@admbau.com');
   }
 
-  // Atualiza o tipo quando o email muda
+  // Atualiza o tipo 
   onEmailChange() {
     this.cadastroData.tipo = this.isAdmin ? 'ADMIN' : 'CLIENTE';
+  }
+
+  formatarCPF(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+    this.cadastroData.cpf = value;
   }
 
   // Envia o formulário
   onSubmit(form: any): void {
     if (form.invalid) return;
 
-    // Verifica se as senhas coincidem
+    
+    const apenasNumeros = this.cadastroData.cpf.replace(/\D/g, '');
+
+    if (apenasNumeros.length !== 11) {
+      this.errorMessage = 'O CPF deve ter exatamente 11 números.';
+     
+      window.scrollTo(0, 0); 
+      return;
+    }
+
+    
     if (this.cadastroData.senha !== this.cadastroData.confirmaSenha) {
       this.errorMessage = 'As senhas não coincidem!';
       return;
@@ -56,7 +76,7 @@ export class CadastrosComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Chama o AuthService para enviar ao backend
+    
     this.authService.register(this.cadastroData).subscribe({
       next: () => {
         this.isLoading = false;
@@ -78,5 +98,4 @@ export class CadastrosComponent {
         }
       }
     });
-  }
-}
+  }}

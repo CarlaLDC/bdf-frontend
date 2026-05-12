@@ -13,7 +13,6 @@
 
 
 
-/* ── Fundo da página ── */
 .pagina {
   min-height: 80vh;
   
@@ -24,7 +23,6 @@
   padding-bottom: 40px;
 }
 
-/* ── Título com borda vermelha ── */
 .titulo {
   width: 100%;
   background: #fff;
@@ -43,7 +41,6 @@
   margin: 0;
 }
 
-/* ── Card com borda azul ── */
 .card {
   background: #fff;
   border: 3px solid #1a5fa8;
@@ -58,8 +55,6 @@
 }
 
 
-
-/* ── Formulário ── */
 form {
   width: 100%;
   display: flex;
@@ -67,13 +62,11 @@ form {
   gap: 12px;
 }
 
-/* ── Linhas com dois campos ── */
 .linha {
   display: flex;
   gap: 20px;
 }
 
-/* ── Cada campo (label + input) ── */
 .campo {
   display: flex;
   align-items: center;
@@ -81,7 +74,6 @@ form {
   flex: 1;
 }
 
-/* Campo vazio só para ocupar espaço ── */
 .campo.vazio {
   flex: 1;
 }
@@ -111,7 +103,6 @@ input::placeholder {
   color: #bbb;
 }
 
-/* ── Badge tipo de conta ── */
 .badge {
   text-align: center;
   padding: 6px 16px;
@@ -130,7 +121,6 @@ input::placeholder {
   border-color: #ffc107;
 }
 
-/* ── Aviso admin ── */
 .aviso-admin {
   background: #fff8e1;
   border: 1px solid #ffc107;
@@ -140,7 +130,7 @@ input::placeholder {
   color: #856404;
 }
 
-/* ── Mensagem de erro ── */
+
 .msg-erro {
   background: #ffe0e0;
   color: #c0392b;
@@ -150,7 +140,6 @@ input::placeholder {
   text-align: center;
 }
 
-/* ── Mensagem de sucesso ── */
 .msg-sucesso {
   background: #e0ffe0;
   color: #27ae60;
@@ -160,7 +149,6 @@ input::placeholder {
   text-align: center;
 }
 
-/* ── Botão ── */
 button {
   display: block;
   margin: 8px auto 0 auto;

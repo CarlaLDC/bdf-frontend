@@ -53,8 +53,7 @@ export class MinhasReservasComponent implements OnInit {
           console.error(err);
           this.erro = 'Não foi possível carregar suas reservas.';
           
-          // MOCK PARA TESTE VISUAL (Baseado na sua imagem)
-          // Remova isso quando a API estiver retornando os dados corretamente
+          
           this.reservas = [{
             id: 1,
             dataEvento: '15/10/2026',

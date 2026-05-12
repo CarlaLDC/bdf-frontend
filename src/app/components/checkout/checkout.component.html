@@ -1,0 +1,134 @@
+
+<img class="background-image" src="/assets/images/fundo.png" alt="Background image">
+
+<div class="checkout-pagina">
+
+  
+  <div class="titulo-box">
+    <h1>Finalização da Reserva</h1>
+  </div>
+
+  <div class="card-resumo">
+    <h2>Resumo do Pedido</h2>
+
+    <div class="itens-lista">
+      <div class="item" *ngFor="let item of itensCarrinho">
+        <img [src]="item.imagemUrl || 'assets/images/castelo.png'" [alt]="item.nome" class="item-img">
+        <div class="item-info">
+          <span class="item-qtd">{{ item.quantidade }}x</span>
+          <span class="item-nome">{{ item.nome }}</span>
+        </div>
+        <span class="item-preco">R$ {{ (item.preco * item.quantidade) | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="totais">
+      <div class="total-linha">
+        <span>Subtotal:</span>
+        <span>R$ {{ subtotal | number:'1.2-2' }}</span>
+      </div>
+      <div class="total-linha">
+        <span>Taxa dos operadores:</span>
+        <span>R$ {{ taxaOperadores | number:'1.2-2' }}</span>
+      </div>
+      <div class="total-linha total-final">
+        <span>Total:</span>
+        <span>R$ {{ total | number:'1.2-2' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-info">
+    <h3>Informações Importante da Festa</h3>
+
+    <div class="form-linha centralizado">
+      <label>Ano:</label>
+      <input type="text" [(ngModel)]="dados.ano" placeholder="2026" />
+    </div>
+
+    <div class="form-linha centralizado">
+      <label>Mês:</label>
+      <select [(ngModel)]="dados.mes">
+        <option value="">Selecione o Mês</option>
+        <option *ngFor="let m of meses; let i = index" [value]="i+1">{{ m }}</option>
+      </select>
+      <label>Dia:</label>
+      <select [(ngModel)]="dados.dia">
+        <option value="">Selecione o Dia</option>
+        <option *ngFor="let d of dias" [value]="d">{{ d }}</option>
+      </select>
+    </div>
+
+    <div class="form-linha centralizado">
+      <label>Horário de Montar:</label>
+      <input type="time" [(ngModel)]="dados.horarioMontagem" placeholder="12:00" />
+      <label>Horário de desmontar:</label>
+      <input type="time" [(ngModel)]="dados.horarioDesmontagem" placeholder="17:00" />
+    </div>
+
+    <hr>
+
+    <div class="form-linha centralizado">
+      <label>CEP:</label>
+      <input type="text" [(ngModel)]="dados.cep" (blur)="buscarCep()" placeholder="00000-000" maxlength="9" />
+    </div>
+
+    <div class="form-linha">
+      <div class="campo">
+        <label>Rua:</label>
+        <input type="text" [(ngModel)]="dados.rua" disabled />
+      </div>
+      <div class="campo">
+        <label>Bairro:</label>
+        <input type="text" [(ngModel)]="dados.bairro" disabled/>
+      </div>
+      <div class="campo">
+        <label>Cidade:</label>
+        <input type="text" [(ngModel)]="dados.cidade" disabled />
+      </div>
+      <div class="campo pequeno">
+        <label>Estado:</label>
+        <input type="text" [(ngModel)]="dados.estado"  maxlength="2" disabled />
+      </div>
+    </div>
+
+    <div class="form-linha">
+      <div class="campo">
+        <label>Numero:</label>
+        <input type="text" [(ngModel)]="dados.numero" placeholder="Digite o número do local" />
+      </div>
+      <div class="campo">
+        <label>Complemento:</label>
+        <input type="text" [(ngModel)]="dados.complemento" placeholder="Casa B" />
+      </div>
+      <div class="campo">
+        <label>Referência:</label>
+        <input type="text" [(ngModel)]="dados.referencia" placeholder="Ao lado da Creche CEI" />
+      </div>
+    </div>
+
+    <div class="form-linha">
+      <input type="checkbox" id="semComplemento" [(ngModel)]="dados.semComplemento" />
+      <label for="semComplemento">Não tem complemento</label>
+    </div>
+
+    <div class="aviso-multa">
+      <input type="checkbox" id="aceitaMulta" [(ngModel)]="aceitaMulta" />
+      <label for="aceitaMulta">
+        Ciente de que, em caso de cancelamento com menos de 3 (três) dias antes da festa, poderá haver cobrança de multa.
+      </label>
+    </div>
+
+   
+    <div class="msg-erro" *ngIf="erroMensagem">{{ erroMensagem }}</div>
+    <div class="msg-sucesso" *ngIf="sucessoMensagem">{{ sucessoMensagem }}</div>
+
+   
+    <div class="btn-box">
+      <button class="btn-finalizar" (click)="finalizar()" [disabled]="!aceitaMulta || carregando">
+        {{ carregando ? 'Finalizando...' : 'Finalizar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
