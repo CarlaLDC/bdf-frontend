@@ -34,6 +34,7 @@ interface Reserva {
 
 @Component({
   selector: 'app-gerenciar-reservas',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './gerenciar-reservas.component.html',
   styleUrl: './gerenciar-reservas.component.css'

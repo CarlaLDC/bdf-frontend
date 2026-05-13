@@ -1,37 +1,25 @@
-import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Component({
-  selector: 'app-service',
-  imports: [],
-  templateUrl: './services.component.html',
-  styleUrl: './services.component.css'
+@Injectable({
+  providedIn: 'root'
 })
 export class ServicesComponent {
 
-  private apiUrl = 'http://localhost:8080/api'; // URL do backend
-  private token: string | null = null;
- 
+  private apiUrl = 'http://localhost:8080/api';
+
   constructor(private http: HttpClient) {}
- 
+
   // ===== AUTENTICAÇÃO =====
-  register(email: string, password: string, name: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, {
-      email,
-      password,
-      nome: name
-    });
+  register(dados: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/register`, dados);
   }
- 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, {
-      email,
-      password
-    });
+
+  login(email: string, senha: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, { email, senha });
   }
- 
+
   // ===== PRODUTOS =====
   getProducts(publico?: string, tipo?: string, minPrice?: number, maxPrice?: number, nome?: string): Observable<any> {
     let params = '';
@@ -40,72 +28,57 @@ export class ServicesComponent {
     if (minPrice) params += `${params ? '&' : '?'}minPrice=${minPrice}`;
     if (maxPrice) params += `${params ? '&' : '?'}maxPrice=${maxPrice}`;
     if (nome) params += `${params ? '&' : '?'}nome=${nome}`;
- 
     return this.http.get(`${this.apiUrl}/products${params}`, this.getHeaders());
   }
- 
+
   getProductById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/products/${id}`, this.getHeaders());
   }
- 
+
   // ===== ENDEREÇO =====
   searchAddress(cep: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/address/cep/${cep}`, this.getHeaders());
   }
- 
+
   // ===== CARRINHO =====
   getCart(): Observable<any> {
     return this.http.get(`${this.apiUrl}/cart`, this.getHeaders());
   }
- 
+
   addToCart(productId: number, quantidade: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/cart/items`, 
-      { productId, quantidade },
-      this.getHeaders()
-    );
+    return this.http.post(`${this.apiUrl}/cart/items`, { productId, quantidade }, this.getHeaders());
   }
- 
+
   updateCartItem(itemId: number, quantidade: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/cart/items/${itemId}?quantidade=${quantidade}`,
-      {},
-      this.getHeaders()
-    );
+    return this.http.put(`${this.apiUrl}/cart/items/${itemId}?quantidade=${quantidade}`, {}, this.getHeaders());
   }
- 
+
   removeFromCart(itemId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/cart/items/${itemId}`, this.getHeaders());
   }
- 
+
   // ===== RESERVAS =====
   checkout(request: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reservations/checkout`,
-      request,
-      this.getHeaders()
-    );
+    return this.http.post(`${this.apiUrl}/reservations/checkout`, request, this.getHeaders());
   }
- 
+
   getMyReservations(): Observable<any> {
     return this.http.get(`${this.apiUrl}/reservations/my`, this.getHeaders());
   }
- 
-  getReservationById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/reservations/${id}`, this.getHeaders());
-  }
- 
+
   cancelReservation(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/reservations/${id}/cancel`, {}, this.getHeaders());
   }
- 
+
   // ===== USUÁRIO =====
   getProfile(): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/me`, this.getHeaders());
   }
- 
+
   deleteAccount(): Observable<any> {
     return this.http.delete(`${this.apiUrl}/users/me`, this.getHeaders());
   }
- 
-  // Helper: Adicionar token JWT no header
+
   private getHeaders(): { headers: HttpHeaders } {
     const token = localStorage.getItem('token');
     return {
@@ -116,6 +89,3 @@ export class ServicesComponent {
     };
   }
 }
- 
-
-

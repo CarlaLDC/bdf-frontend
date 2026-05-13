@@ -6,6 +6,7 @@ import { ProdutoPayload, ProdutoServices } from '../../services/produto/produto.
 
 @Component({
   selector: 'app-adicionar-produto',
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './adicionar-produto.component.html',
   styleUrl: './adicionar-produto.component.css'
@@ -16,7 +17,7 @@ export class AdicionarProdutoComponent {
     descricao: '',
     preco: null as number | null,
     estoque: null as number | null,
-    status: 'DISPONIVEL',
+    status: 'ATIVO',
     tipo: '',
     publico: '',
     imagemUrl: '',
@@ -59,7 +60,7 @@ export class AdicionarProdutoComponent {
         this.salvando = false;
         this.mensagem = 'Produto cadastrado com sucesso.';
         form.resetForm({
-          status: 'DISPONIVEL'
+          status: 'ATIVO'
         });
         this.imagemPreview = 'assets/images/castelo.png';
         this.nomeArquivoImagem = '';

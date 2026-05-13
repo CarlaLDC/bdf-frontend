@@ -1,38 +1,61 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-perfil-admin',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './perfil-admin.component.html',
   styleUrl: './perfil-admin.component.css',
 })
-export class PerfilAdmin {
-  usuario = this.carregarUsuario();
+export class PerfilAdmin implements OnInit {
 
-  get nome(): string {
-    const nomeCompleto = [this.usuario?.nome, this.usuario?.sobrenome].filter(Boolean).join(' ');
-    return nomeCompleto || this.usuario?.name || 'Administrador';
-  }
+  usuario: any = null;
+  erro = '';
 
-  get cpf(): string {
-    return this.usuario?.cpf || '000.000.000-00';
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  get email(): string {
-    return this.usuario?.email || 'tmarangoni@admbau.com';
-  }
-
-  private carregarUsuario(): any {
-    const usuario = localStorage.getItem('usuario');
-    if (!usuario) return null;
-
-    try {
-      return JSON.parse(usuario);
-    } catch {
-      return null;
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
     }
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    this.http.get('http://localhost:8080/api/users/me', { headers }).subscribe({
+      next: (res: any) => {
+        this.usuario = res.data;
+      },
+      error: () => {
+        this.erro = 'Não foi possível carregar o perfil.';
+      }
+    });
+  }
+
+  sair() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/']);
+  }
+
+  excluirConta() {
+    const confirmar = confirm('Tem certeza que deseja excluir esta conta de administrador?');
+    if (!confirmar) return;
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    this.http.delete('http://localhost:8080/api/users/me', { headers }).subscribe({
+      next: () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('usuario');
+        this.router.navigate(['/']);
+      },
+      error: () => alert('Erro ao excluir conta. Tente novamente.')
+    });
   }
 }
 

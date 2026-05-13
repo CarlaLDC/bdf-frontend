@@ -6,7 +6,15 @@
     <h1>Perfil Administrador</h1>
   </section>
 
-  <div class="perfil-card">
+  <div class="perfil-card" *ngIf="!usuario && !erro">
+    <p style="text-align:center; color:#666;">Carregando perfil...</p>
+  </div>
+
+  <div class="perfil-card" *ngIf="erro">
+    <p style="text-align:center; color:#c0392b;">{{ erro }}</p>
+  </div>
+
+  <div class="perfil-card" *ngIf="usuario">
 
     <div class="avatar-area">
       <div class="avatar-circle">
@@ -14,7 +22,7 @@
           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
         <span class="avatar-fallback">👤</span>
       </div>
-      <h2 class="nome-usuario">{{ nome }}</h2>
+      <h2 class="nome-usuario">{{ usuario.nome }}</h2>
       <span class="badge-tipo">Administrador</span>
     </div>
 
@@ -26,12 +34,8 @@
         <span class="info-valor">Administrador</span>
       </div>
       <div class="info-item">
-        <span class="info-label">CPF</span>
-        <span class="info-valor">{{ cpf }}</span>
-      </div>
-      <div class="info-item">
         <span class="info-label">E-mail</span>
-        <span class="info-valor">{{ email }}</span>
+        <span class="info-valor">{{ usuario.email }}</span>
       </div>
     </div>
 
@@ -42,8 +46,8 @@
         <button class="btn-gerenciar" routerLink="/gerenciar-produto">Gerenciar Produtos</button>
         <button class="btn-gerenciar" routerLink="/gerenciar-reservas">Gerenciar Reservas</button>
       </div>
-      <button class="btn-excluir">Excluir Conta</button>
-      <button class="btn-sair">Sair</button>
+      <button class="btn-excluir" (click)="excluirConta()">Excluir Conta</button>
+      <button class="btn-sair" (click)="sair()">Sair</button>
     </div>
 
   </div>

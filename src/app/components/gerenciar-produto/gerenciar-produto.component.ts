@@ -4,6 +4,7 @@ import { ProdutosComponent } from '../produtos/produtos.component';
 
 @Component({
   selector: 'app-gerenciar-produto',
+  standalone: true,
   imports: [FilterComponent, ProdutosComponent],
   templateUrl: './gerenciar-produto.component.html',
   styleUrl: './gerenciar-produto.component.css'
