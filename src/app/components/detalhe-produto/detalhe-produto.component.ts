@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProdutoServices } from '../../services/produto/produto.component';
+import { CarrinhoService } from '../../services/carrinho/carrinho.service';
 
 @Component({
   selector: 'app-produto-detalhe',
@@ -21,7 +22,8 @@ export class ProdutoDetalheComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private produtoService: ProdutoServices
+    private produtoService: ProdutoServices,
+    private carrinhoService: CarrinhoService
   ) {}
 
   ngOnInit() {
@@ -52,15 +54,16 @@ export class ProdutoDetalheComponent implements OnInit {
     }
   }
 
-  adicionarCarrinho() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Você precisa estar logado para adicionar ao carrinho!');
-      this.router.navigate(['/login']);
-      return;
-    }
-    alert(`${this.quantidade}x ${this.produto.nome} adicionado ao carrinho!`);
+
+adicionarCarrinho() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    this.router.navigate(['/login']);
+    return;
   }
+
+  this.carrinhoService.adicionar(this.produto, this.quantidade);
+}
 
   reservarAgora() {
     const token = localStorage.getItem('token');

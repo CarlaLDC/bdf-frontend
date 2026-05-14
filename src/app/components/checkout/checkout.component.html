@@ -12,7 +12,7 @@
     <h2>Resumo do Pedido</h2>
 
     <div class="itens-lista">
-      <div class="item" *ngFor="let item of itensCarrinho">
+      <div class="item" *ngFor="let item of (carrinhoService.itens$ | async)">
         <img [src]="item.imagemUrl || 'assets/images/castelo.png'" [alt]="item.nome" class="item-img">
         <div class="item-info">
           <span class="item-qtd">{{ item.quantidade }}x</span>
@@ -33,7 +33,7 @@
       </div>
       <div class="total-linha total-final">
         <span>Total:</span>
-        <span>R$ {{ total | number:'1.2-2' }}</span>
+        <span class="cor-verde">R$ {{ totalFinal | number:'1.2-2' }}</span>
       </div>
     </div>
   </div>

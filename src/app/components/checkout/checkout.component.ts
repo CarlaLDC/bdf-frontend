@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CarrinhoService } from '../../services/carrinho/carrinho.service'; // Verifique se o caminho está correto
 
 @Component({
   selector: 'app-checkout',
@@ -13,11 +14,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CheckoutComponent implements OnInit {
 
-  itensCarrinho: any[] = [];
-
-  subtotal = 0;
-  taxaOperadores = 350;
-  total = 0;
+  // Agora usamos o serviço para os itens e totais
+  taxaOperadores = 50.00; // Ajuste o valor da taxa conforme necessário
 
   dados = {
     ano: new Date().getFullYear().toString(),
@@ -36,20 +34,22 @@ export class CheckoutComponent implements OnInit {
     semComplemento: false
   };
 
-  // Controles
   aceitaMulta = false;
   carregando = false;
   erroMensagem = '';
   sucessoMensagem = '';
 
-  // Listas para os selects
   meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
            'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   dias = Array.from({ length: 31 }, (_, i) => i + 1);
 
   private apiUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient, 
+    private router: Router,
+    public carrinhoService: CarrinhoService // Injetando o serviço
+  ) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -57,27 +57,15 @@ export class CheckoutComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
-    this.carregarCarrinho();
   }
 
-  carregarCarrinho() {
-    const headers = new HttpHeaders({ Authorization: `Bearer ${localStorage.getItem('token')}` });
-    this.http.get(`${this.apiUrl}/cart`, { headers }).subscribe({
-      next: (res: any) => {
-        this.itensCarrinho = res.data?.items || [];
-        this.calcularTotais();
-      },
-      error: () => {
-        this.erroMensagem = 'Erro ao carregar o carrinho.';
-      }
-    });
+  // Getters para facilitar o uso no HTML
+  get subtotal() {
+    return this.carrinhoService.total;
   }
 
-  calcularTotais() {
-    this.subtotal = this.itensCarrinho.reduce((acc, item) => {
-      return acc + (item.product?.preco || item.preco || 0) * item.quantidade;
-    }, 0);
-    this.total = this.subtotal + this.taxaOperadores;
+  get totalFinal() {
+    return this.subtotal + this.taxaOperadores;
   }
 
   buscarCep() {
@@ -99,8 +87,11 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-
   finalizar() {
+    if (this.subtotal === 0) { 
+      this.erroMensagem = 'Carrinho vazio. Adicione brinquedos antes de finalizar a reserva.';
+      return;
+    }
     if (!this.dados.mes || !this.dados.dia) {
       this.erroMensagem = 'Selecione a data da festa.';
       return;
@@ -117,16 +108,17 @@ export class CheckoutComponent implements OnInit {
 
     const body = {
       dataEvento,
-      horarioMontagem:    this.dados.horarioMontagem,
+      horarioMontagem:     this.dados.horarioMontagem,
       horarioDesmontagem: this.dados.horarioDesmontagem,
-      cep:         this.dados.cep,
-      rua:         this.dados.rua,
-      bairro:      this.dados.bairro,
-      cidade:      this.dados.cidade,
-      estado:      this.dados.estado,
-      numero:      this.dados.numero,
-      complemento: this.dados.semComplemento ? '' : this.dados.complemento,
-      referencia:  this.dados.referencia
+      cep:          this.dados.cep,
+      rua:          this.dados.rua,
+      bairro:       this.dados.bairro,
+      cidade:       this.dados.cidade,
+      estado:       this.dados.estado,
+      numero:       this.dados.numero,
+      complemento:  this.dados.semComplemento ? '' : this.dados.complemento,
+      referencia:   this.dados.referencia,
+      total:        this.totalFinal // Enviando o valor total correto para o banco
     };
 
     const headers = new HttpHeaders({

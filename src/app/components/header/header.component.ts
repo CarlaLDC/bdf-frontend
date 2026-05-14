@@ -1,18 +1,17 @@
+// src/app/components/header/header.component.ts
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CarrinhoService } from '../../services/carrinho/carrinho.service'; //
 
 @Component({
   selector: 'app-header',
-  standalone: true,
-  imports: [RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  menuCarrinhoAberto = false;
+  constructor(private carrinhoService: CarrinhoService) {}
 
   menuCarrinho() {
-    this.menuCarrinhoAberto = !this.menuCarrinhoAberto;
-
+    // ESTA LINHA É A CHAVE: ela avisa o serviço para mudar o estado
+    this.carrinhoService.toggle(); 
   }
 }
