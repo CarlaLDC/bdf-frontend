@@ -7,9 +7,18 @@
         <a href="">Sobre Nós</a>
     </span>
 
-    <input class="search" type="text" placeholder="Busque aqui...">
+    <input
+        class="search"
+        type="text"
+        placeholder="Busque aqui..."
+        [value]="termoBusca"
+        (input)="termoBusca = $any($event.target).value"
+        (keyup.enter)="pesquisarProdutos()"
+    >
 
-    <button class="btn-perfil">Meu Perfil</button>
+    <button class="btn-perfil" type="button" (click)="irParaPerfilOuLogin()">
+        {{ usuarioLogado ? 'Meu Perfil' : 'Login' }}
+    </button>
 
     <img class="carrinho" src="assets/images/carrinho.png" alt="carrinho" (click)="menuCarrinho()">
 </section>

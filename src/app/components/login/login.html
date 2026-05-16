@@ -15,12 +15,12 @@
     <p class="mensagem-erro" *ngIf="errorMessage">{{ errorMessage }}</p>
 
     <div class="form-grupo">
-      <label class="form-label">📧 E-mail</label>
+      <label class="form-label">E-mail</label>
       <input class="form-input" type="email" name="email" placeholder="Digite seu e-mail" [(ngModel)]="credentials.email" required>
     </div>
 
     <div class="form-grupo">
-      <label class="form-label">🔒 Senha</label>
+      <label class="form-label">Senha</label>
       <input class="form-input" type="password" name="senha" placeholder="Digite sua senha" [(ngModel)]="credentials.senha" required>
     </div>
 
@@ -28,9 +28,9 @@
 
     <div class="acoes">
       <button class="btn-entrar" type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Entrando...' : '🎉 Entrar' }}
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
       </button>
-      <button class="btn-cadastrar" type="button" routerLink="/cadastros">✨ Criar conta</button>
+      <button class="btn-cadastrar" type="button" routerLink="/cadastros">Criar conta</button>
     </div>
 
   </form>

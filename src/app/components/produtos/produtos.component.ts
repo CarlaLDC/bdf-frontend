@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ProdutoServices } from '../../services/produto/produto.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
  
 @Component({
   selector: 'app-produtos',
@@ -10,12 +11,13 @@ import { RouterModule } from '@angular/router';
   templateUrl: './produtos.component.html',
   styleUrls: ['./produtos.component.css']
 })
-export class ProdutosComponent implements OnInit, OnChanges {
+export class ProdutosComponent implements OnInit, OnChanges, OnDestroy {
   produtos: any[] = [];
   loading = false;
   erro = '';
   mensagem = '';
   excluindoId: number | null = null;
+  private queryParamsSubscription?: Subscription;
  
   // Filtros
   @Input() publicoSelecionado: string | null = null;
@@ -23,10 +25,20 @@ export class ProdutosComponent implements OnInit, OnChanges {
   @Input() nomeBusca: string = '';
   @Input() modoGerenciamento = false;
  
-  constructor(private ProdutoServices: ProdutoServices) {}
+  constructor(
+    private ProdutoServices: ProdutoServices,
+    private route: ActivatedRoute
+  ) {}
  
   ngOnInit() {
-    this.carregarProdutos();
+    this.queryParamsSubscription = this.route.queryParamMap.subscribe((params) => {
+      this.nomeBusca = params.get('nome') || '';
+      this.carregarProdutos();
+    });
+  }
+
+  ngOnDestroy() {
+    this.queryParamsSubscription?.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
