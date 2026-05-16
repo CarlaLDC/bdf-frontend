@@ -40,23 +40,6 @@ export class PerfilAdmin implements OnInit {
     localStorage.removeItem('usuario');
     this.router.navigate(['/']);
   }
-
-  excluirConta() {
-    const confirmar = confirm('Tem certeza que deseja excluir esta conta de administrador?');
-    if (!confirmar) return;
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-
-    this.http.delete('http://localhost:8080/api/users/me', { headers }).subscribe({
-      next: () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('usuario');
-        this.router.navigate(['/']);
-      },
-      error: () => alert('Erro ao excluir conta. Tente novamente.')
-    });
-  }
 }
 
 export { PerfilAdmin as PerfilAdminComponent };
