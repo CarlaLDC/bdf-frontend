@@ -13,6 +13,8 @@ import { Login } from './components/login/login';
 import { CadastrosComponent } from './components/cadastros/cadastros.component';
 import { MinhasReservasComponent } from './components/minhas-reservas/minhas-reservas.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password';
+import { ResetPasswordComponent } from './components/reset-password/reset-password';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -30,5 +32,7 @@ export const routes: Routes = [
   { path: 'cadastros', component: CadastrosComponent },
   { path: 'minhas-reservas', component: MinhasReservasComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'redefinir-senha', component: ResetPasswordComponent },
   { path: '**', redirectTo: '' }
 ];
