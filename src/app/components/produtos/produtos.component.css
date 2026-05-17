@@ -80,8 +80,10 @@ section {
     opacity: 0.6;
 }
 
+
+
 img {
-    width: 100%;
+    width: 90%;
     height: 200px;
     object-fit: cover;
 }

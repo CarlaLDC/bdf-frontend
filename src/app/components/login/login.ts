@@ -54,7 +54,7 @@ export class Login {
         }
 
         const email = String(usuario?.email || this.credentials.email).toLowerCase();
-        const tipo = String(usuario?.tipo || usuario?.role || '').toUpperCase();
+        const tipo = String(usuario?.userType || usuario?.tipoUsuario || usuario?.tipoConta || usuario?.tipo || usuario?.role || '').toUpperCase();
         const isAdmin = tipo.includes('ADMIN') || email.endsWith('@admbau.com');
 
         this.router.navigate([isAdmin ? '/perfil-admin' : '/perfil-cliente']);

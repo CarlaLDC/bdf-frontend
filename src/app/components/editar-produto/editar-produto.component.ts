@@ -18,7 +18,7 @@ export class EditarProdutoComponent implements OnInit {
     descricao: '',
     preco: null as number | null,
     estoque: null as number | null,
-    status: 'DISPONIVEL',
+    status: 'ATIVO',
     tipo: '',
     publico: '',
     imagemUrl: '',
@@ -140,7 +140,7 @@ export class EditarProdutoComponent implements OnInit {
       descricao: produto?.descricao ?? '',
       preco: produto?.preco ?? null,
       estoque: produto?.estoque ?? null,
-      status: produto?.status ?? 'DISPONIVEL',
+      status: this.normalizarStatus(produto?.status),
       tipo: produto?.tipo ?? '',
       publico: produto?.publico ?? '',
       imagemUrl: produto?.imagemUrl || produto?.imagem || '',
@@ -189,6 +189,13 @@ export class EditarProdutoComponent implements OnInit {
     if (!imagem) return 'assets/images/castelo.png';
     if (imagem.startsWith('http') || imagem.startsWith('assets/') || imagem.startsWith('data:')) return imagem;
     return `assets/images/${imagem}`;
+  }
+
+  private normalizarStatus(status: unknown): string {
+    if (status === 'DISPONIVEL') return 'ATIVO';
+    if (status === 'INDISPONIVEL') return 'INATIVO';
+    if (status === 'ATIVO' || status === 'INATIVO') return status;
+    return 'ATIVO';
   }
 
   private primeiroNumero(valor: unknown): number | null {

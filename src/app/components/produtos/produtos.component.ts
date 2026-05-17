@@ -52,13 +52,25 @@ export class ProdutosComponent implements OnInit, OnChanges, OnDestroy {
     this.loading = true;
     this.erro = '';
     
-    this.ProdutoServices.getProducts(
-      this.publicoSelecionado || undefined,
-      this.tipoSelecionado || undefined,
-      this.nomeBusca || undefined
-    ).subscribe({
+    const request$ = this.modoGerenciamento
+      ? this.ProdutoServices.getProductsAdmin()
+      : this.ProdutoServices.getProducts(
+          this.publicoSelecionado || undefined,
+          this.tipoSelecionado || undefined,
+          this.nomeBusca || undefined
+        );
+
+    request$.subscribe({
       next: (response) => {
-        this.produtos = response.data;
+        const produtos = response.data ?? [];
+        this.produtos = this.modoGerenciamento
+          ? produtos.filter((produto: any) => {
+              const publicoOk = !this.publicoSelecionado || produto.publico === this.publicoSelecionado;
+              const tipoOk = !this.tipoSelecionado || produto.tipo === this.tipoSelecionado;
+              const nomeOk = !this.nomeBusca || String(produto.nome || '').toLowerCase().includes(this.nomeBusca.toLowerCase());
+              return publicoOk && tipoOk && nomeOk;
+            })
+          : produtos;
         this.loading = false;
       },
       error: (error) => {
@@ -86,7 +98,7 @@ export class ProdutosComponent implements OnInit, OnChanges, OnDestroy {
       error: (error) => {
         console.error('Erro ao excluir produto:', error);
         this.excluindoId = null;
-        this.erro = 'Nao foi possivel excluir o produto.';
+        this.erro = error.error?.message || 'Nao foi possivel excluir o produto.';
       }
     });
   }

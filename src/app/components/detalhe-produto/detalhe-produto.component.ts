@@ -18,6 +18,7 @@ export class ProdutoDetalheComponent implements OnInit {
   quantidade: number = 1;
   loading = true;
   erro = '';
+  mensagemCarrinho = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +44,7 @@ export class ProdutoDetalheComponent implements OnInit {
   }
 
   aumentar() {
-    if (this.quantidade < this.produto.estoque) {
+    if (this.quantidade < this.estoqueDisponivel) {
       this.quantidade++;
     }
   }
@@ -62,7 +63,12 @@ adicionarCarrinho() {
     return;
   }
 
-  this.carrinhoService.adicionar(this.produto, this.quantidade);
+  this.mensagemCarrinho = '';
+  const adicionou = this.carrinhoService.adicionar(this.produto, this.quantidade);
+
+  if (!adicionou) {
+    this.mensagemCarrinho = `Estoque máximo atingido para este produto (${this.estoqueDisponivel}).`;
+  }
 }
 
   reservarAgora() {
@@ -87,5 +93,9 @@ adicionarCarrinho() {
     if (!this.produto?.preco) return '';
     const parcela = (this.produto.preco / 2).toFixed(2).replace('.', ',');
     return `OU 2X por ${parcela} s/ juros`;
+  }
+
+  get estoqueDisponivel(): number {
+    return Number(this.produto?.estoque ?? 0);
   }
 }

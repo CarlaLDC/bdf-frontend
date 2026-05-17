@@ -12,8 +12,8 @@
     <div class="card-header">
       <h3>Reserva #{{ reserva.id.toString().padStart(5, '0') }}</h3>
       <span class="status-badge" 
-            [ngClass]="{'status-confirmado': reserva.status === 'CONFIRMADO', 'status-cancelado': reserva.status === 'CANCELADO'}">
-        {{ reserva.status | titlecase }}
+            [ngClass]="{'status-confirmado': reserva.status === 'CONFIRMADO' || reserva.status === 'FINALIZADO', 'status-cancelado': reserva.status === 'CANCELADO'}">
+        {{ reserva.status === 'FINALIZADO' ? 'Finalizado' : (reserva.status | titlecase) }}
       </span>
     </div>
 
@@ -27,23 +27,23 @@
 
       <div class="info-item">
         <span class="icone">📍</span>
-        <p><strong>Endereço do Evento:</strong> {{ reserva.enderecoEvento }}</p>
+        <p><strong>Endereço do Evento:</strong> {{ enderecoCompleto(reserva) }}</p>
       </div>
 
       <div class="info-item">
         <span class="icone">🕒</span>
-        <p><strong>Horários:</strong> Montagem - {{ reserva.horarioMontagem }} e Retirada - {{ reserva.horarioRetirada }}</p>
+        <p><strong>Horários:</strong> Montagem - {{ reserva.horarioMontagem }} e Retirada - {{ reserva.horarioDesmontagem }}</p>
       </div>
     </div>
 
     <div class="brinquedos-secao">
       <p class="titulo-secao">Brinquedos:</p>
       
-      <div class="brinquedo-item" *ngFor="let item of reserva.itens">
-        <img [src]="item.imagemUrl" [alt]="item.produtoNome" class="img-brinquedo" onerror="this.src='assets/placeholder.jpg'">
+      <div class="brinquedo-item" *ngFor="let item of reserva.items">
+        <img [src]="item.productImagemUrl || 'assets/images/castelo.png'" [alt]="item.productNome" class="img-brinquedo" onerror="this.src='assets/images/castelo.png'">
         <div class="detalhes-brinquedo">
-          <p class="nome-qtd"><strong>{{ item.quantidade }}X {{ item.produtoNome }}</strong></p>
-          <p class="preco">{{ (item.precoUnitario * item.quantidade) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
+          <p class="nome-qtd"><strong>{{ item.quantidade }}X {{ item.productNome }}</strong></p>
+          <p class="preco">{{ item.subtotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
       <p class="texto-aviso">Ciente de que, em caso de cancelamento com menos de 3 (três) dias antes da festa, poderá haver cobrança de multa.</p>
       <button class="btn-cancelar" 
               (click)="cancelarReserva(reserva.id)"
-              [disabled]="reserva.status === 'CANCELADO'">
+              [disabled]="reserva.status === 'CANCELADO' || reserva.status === 'FINALIZADO'">
         Cancelar a reserva
       </button>
     </div>

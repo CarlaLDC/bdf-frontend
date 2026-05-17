@@ -40,6 +40,10 @@ export class ProdutoServices {
     const url = params.toString() ? `${this.apiUrl}?${params}` : this.apiUrl;
     return this.http.get(url);  // ← Chamada HTTP GET
   }
+
+  getProductsAdmin(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin`, this.getHeaders());
+  }
  
   // 2️⃣ Buscar produto por ID
   getProductById(id: number): Observable<any> {

@@ -15,7 +15,7 @@ interface ReservaItem {
 interface Reserva {
   id: number;
   numeroReserva: string;
-  status: 'PENDENTE' | 'CONFIRMADO' | 'CANCELADO';
+  status: 'PENDENTE' | 'CONFIRMADO' | 'CANCELADO' | 'FINALIZADO';
   dataEvento: string;
   horarioMontagem: string;
   horarioDesmontagem: string;
@@ -61,7 +61,7 @@ export class GerenciarReservasComponent implements OnInit {
     this.http.get<{ message: string; data: Reserva[] }>(`${this.apiUrl}/all`, this.getHeaders())
       .subscribe({
         next: (res) => {
-          this.reservas = res.data ?? [];
+          this.reservas = (res.data ?? []).filter((reserva) => reserva.status !== 'FINALIZADO');
           this.carregando = false;
         },
         error: (err) => {
@@ -77,7 +77,7 @@ export class GerenciarReservasComponent implements OnInit {
   }
 
   finalizarReserva(reserva: Reserva): void {
-    this.atualizarStatus(reserva, 'CONFIRMADO', 'Reserva finalizada. O backend atual registra este fluxo como CONFIRMADO.');
+    this.atualizarStatus(reserva, 'FINALIZADO', 'Reserva finalizada!');
   }
 
   cancelarReserva(reserva: Reserva): void {
@@ -122,7 +122,7 @@ export class GerenciarReservasComponent implements OnInit {
   }
 
   podeConfirmar(reserva: Reserva): boolean {
-    return reserva.status !== 'CONFIRMADO' && reserva.status !== 'CANCELADO';
+    return reserva.status !== 'CONFIRMADO' && reserva.status !== 'CANCELADO' && reserva.status !== 'FINALIZADO';
   }
 
   podeFinalizar(reserva: Reserva): boolean {
@@ -130,7 +130,7 @@ export class GerenciarReservasComponent implements OnInit {
   }
 
   podeCancelar(reserva: Reserva): boolean {
-    return reserva.status !== 'CANCELADO';
+    return reserva.status !== 'CANCELADO' && reserva.status !== 'FINALIZADO';
   }
 
   private atualizarStatus(reserva: Reserva, status: Reserva['status'], mensagem: string): void {
@@ -149,9 +149,14 @@ export class GerenciarReservasComponent implements OnInit {
   }
 
   private aplicarReservaAtualizada(reservaAtualizada: Reserva, mensagem: string): void {
-    this.reservas = this.reservas.map((reserva) =>
-      reserva.id === reservaAtualizada.id ? reservaAtualizada : reserva
-    );
+    if (reservaAtualizada.status === 'FINALIZADO') {
+      this.reservas = this.reservas.filter((reserva) => reserva.id !== reservaAtualizada.id);
+    } else {
+      this.reservas = this.reservas.map((reserva) =>
+        reserva.id === reservaAtualizada.id ? reservaAtualizada : reserva
+      );
+    }
+
     this.mensagem = mensagem;
     this.processandoId = null;
   }

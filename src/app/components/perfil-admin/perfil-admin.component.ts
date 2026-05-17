@@ -27,7 +27,16 @@ export class PerfilAdmin implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     this.http.get('http://localhost:8080/api/users/me', { headers }).subscribe({
       next: (res: any) => {
-        this.usuario = res.data;
+        const usuario = res?.data ?? res;
+        const tipo = String(usuario?.userType || usuario?.tipoUsuario || usuario?.tipoConta || usuario?.tipo || usuario?.role || '').toUpperCase();
+
+        if (!tipo.includes('ADMIN')) {
+          this.router.navigate(['/perfil-cliente']);
+          return;
+        }
+
+        this.usuario = usuario;
+        localStorage.setItem('usuario', JSON.stringify(usuario));
       },
       error: () => {
         this.erro = 'Não foi possível carregar o perfil.';

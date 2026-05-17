@@ -126,15 +126,30 @@ export class CheckoutComponent implements OnInit {
       'Content-Type': 'application/json'
     });
 
-    this.http.post(`${this.apiUrl}/reservations/checkout`, body, { headers }).subscribe({
-      next: () => {
-        this.carregando = false;
-        this.sucessoMensagem = 'Reserva realizada com sucesso!';
-        setTimeout(() => this.router.navigate(['/minhas-reservas']), 1500);
+    this.carrinhoService.sincronizarComBackend().subscribe({
+      next: (sincronizado) => {
+        if (!sincronizado) {
+          this.carregando = false;
+          this.erroMensagem = 'Nao foi possivel sincronizar o carrinho. Tente adicionar o produto novamente.';
+          return;
+        }
+
+        this.http.post(`${this.apiUrl}/reservations/checkout`, body, { headers }).subscribe({
+          next: () => {
+            this.carregando = false;
+            this.carrinhoService.limpar();
+            this.sucessoMensagem = 'Reserva realizada com sucesso!';
+            setTimeout(() => this.router.navigate(['/minhas-reservas']), 1500);
+          },
+          error: (err) => {
+            this.carregando = false;
+            this.erroMensagem = err.error?.message || 'Erro ao finalizar reserva.';
+          }
+        });
       },
-      error: (err) => {
+      error: () => {
         this.carregando = false;
-        this.erroMensagem = err.error?.message || 'Erro ao finalizar reserva.';
+        this.erroMensagem = 'Nao foi possivel sincronizar o carrinho. Tente novamente.';
       }
     });
   }
