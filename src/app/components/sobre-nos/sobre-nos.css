@@ -201,3 +201,49 @@
   transform: scale(1.04);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
 }
+
+@media (max-width: 768px) {
+  .contatos-bar {
+    align-items: stretch;
+    flex-direction: column;
+    margin: 12px;
+    padding: 16px;
+  }
+
+  .conteudo-principal {
+    margin: 12px;
+  }
+
+  .secao-card {
+    padding: 24px 18px;
+  }
+
+  .secao-card > p {
+    text-align: left;
+  }
+
+  .numeros {
+    gap: 24px;
+  }
+
+  .numero {
+    font-size: 2rem;
+  }
+
+  .lista-valores li {
+    padding: 12px;
+  }
+
+  .secao-cta {
+    padding: 36px 18px;
+  }
+
+  .secao-cta h2 {
+    font-size: 1.35rem;
+  }
+
+  .btn-cta {
+    width: 100%;
+    padding: 13px 18px;
+  }
+}

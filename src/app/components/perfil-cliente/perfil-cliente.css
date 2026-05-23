@@ -186,3 +186,37 @@
   background-color: #fdf0f0;
   transform: scale(1.02);
 }
+
+@media (max-width: 768px) {
+  .perfil-wrapper {
+    margin: 12px;
+    gap: 14px;
+  }
+
+  .perfil-header-bar {
+    padding: 14px 16px;
+  }
+
+  .perfil-header-bar h1 {
+    font-size: 1.2rem;
+  }
+
+  .perfil-card {
+    padding: 24px 18px;
+  }
+
+  .avatar-circle {
+    width: 84px;
+    height: 84px;
+  }
+
+  .info-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .info-valor {
+    overflow-wrap: anywhere;
+  }
+}

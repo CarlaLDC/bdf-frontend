@@ -173,3 +173,50 @@
 .btn-checkout:hover {
     background-color: #014d73;
 }
+
+@media (max-width: 768px) {
+    .menu-lateral-carrinho {
+        width: min(350px, 100vw);
+    }
+
+    .item-info {
+        min-width: 0;
+    }
+
+    .item-nome {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 420px) {
+    .header-carrinho,
+    .footer-carrinho {
+        padding: 16px;
+    }
+
+    .item-carrinho {
+        align-items: flex-start;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .item-img {
+        width: 64px;
+        height: 58px;
+        margin-right: 10px;
+    }
+
+    .item-nome {
+        font-size: 14px;
+    }
+
+    .item-preco,
+    .total-verde {
+        font-size: 16px;
+    }
+
+    .btn-checkout {
+        font-size: 16px;
+        padding: 13px;
+    }
+}

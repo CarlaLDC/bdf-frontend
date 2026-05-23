@@ -179,3 +179,41 @@ button.btn-admin {
 button.btn-admin:hover {
   background: #6d5204;
 }
+
+@media (max-width: 768px) {
+  .pagina {
+    padding: 0 12px 32px;
+  }
+
+  .titulo {
+    padding: 12px;
+  }
+
+  .titulo h1 {
+    font-size: 22px;
+  }
+
+  .card {
+    padding: 22px 16px;
+  }
+
+  .linha,
+  .campo {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  label {
+    white-space: normal;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    padding: 11px 18px;
+  }
+}

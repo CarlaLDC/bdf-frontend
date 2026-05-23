@@ -161,3 +161,48 @@
   text-align: center;
   color: #666;
 }
+
+@media (max-width: 768px) {
+  .container-reservas {
+    padding: 12px;
+  }
+
+  .cabecalho-pagina h2 {
+    font-size: 1.25rem;
+  }
+
+  .reserva-card {
+    padding: 18px 14px;
+  }
+
+  .card-header,
+  .brinquedo-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status-badge {
+    font-size: 0.98rem;
+  }
+
+  .info-item {
+    align-items: flex-start;
+  }
+
+  .info-item p {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .img-brinquedo {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+  }
+
+  .btn-cancelar {
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 1rem;
+  }
+}

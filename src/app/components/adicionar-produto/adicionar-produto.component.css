@@ -231,3 +231,26 @@ input[type="file"] {
     width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  h1 {
+    padding: 14px;
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  .primary-container {
+    padding: 14px;
+  }
+
+  .inline-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-inputs span {
+    text-align: center;
+  }
+}

@@ -331,4 +331,53 @@ main {
     grid-template-columns: 1fr;
     margin-top: 26px;
   }
+
+  .reserva-card {
+    overflow-wrap: anywhere;
+  }
+
+  .acoes button {
+    width: 100%;
+    font-size: 24px;
+    height: auto;
+    min-height: 44px;
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .painel-reservas h1 {
+    font-size: 25px;
+  }
+
+  .reserva-topo h2 {
+    font-size: 22px;
+  }
+
+  .linha-info {
+    align-items: flex-start;
+  }
+
+  .linha-info p,
+  .info-reserva h3,
+  .brinquedos h3 {
+    font-size: 16px;
+  }
+
+  .produto {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 0;
+  }
+
+  .produto img {
+    height: auto;
+    width: 100%;
+    max-height: 180px;
+  }
+
+  .detalhes p,
+  .preco {
+    font-size: 18px;
+  }
 }

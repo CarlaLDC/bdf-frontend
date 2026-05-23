@@ -174,3 +174,29 @@ img {
     background: #f8e7e7;
     color: #b64646;
 }
+
+@media (max-width: 768px) {
+    .container {
+        width: calc(100% - 24px);
+        height: auto;
+        min-height: 0;
+        margin: 12px;
+        border-width: 5px;
+        font-size: 16px;
+    }
+
+    .cards {
+        margin: 18px 12px;
+        gap: 16px;
+    }
+
+    .card {
+        width: min(100%, 320px);
+        min-height: 0;
+        padding: 16px;
+    }
+
+    img {
+        height: 180px;
+    }
+}

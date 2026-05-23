@@ -172,3 +172,26 @@
   padding: 10px 12px;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .login-wrapper {
+    margin: 12px;
+    gap: 14px;
+  }
+
+  .login-header-bar {
+    padding: 14px 16px;
+  }
+
+  .login-header-bar h1 {
+    font-size: 1.2rem;
+  }
+
+  .login-card {
+    padding: 24px 18px;
+  }
+
+  .login-logo {
+    width: 150px;
+  }
+}
