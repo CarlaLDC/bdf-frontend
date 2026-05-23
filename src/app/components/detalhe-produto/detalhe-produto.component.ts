@@ -71,16 +71,6 @@ adicionarCarrinho() {
   }
 }
 
-  reservarAgora() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Você precisa estar logado para reservar!');
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.router.navigate(['/checkout']);
-  }
-
   get itensInclusos(): string[] {
     if (!this.produto?.itensInclusos) return [];
     return this.produto.itensInclusos

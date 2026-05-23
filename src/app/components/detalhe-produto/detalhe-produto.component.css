@@ -136,22 +136,6 @@
   background: #247a24;
 }
 
-.btn-reservar {
-  padding: 12px 28px;
-  font-size: 15px;
-  font-weight: 700;
-  background: #2e7d2e;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-reservar:hover {
-  background: #1f5f1f;
-}
-
 /* ------------------------------------------------- */
 .detalhe-rodape {
   background: #fff;
@@ -248,8 +232,7 @@
     flex-direction: column;
   }
 
-  .btn-carrinho,
-  .btn-reservar {
+  .btn-carrinho {
     width: 100%;
   }
 
