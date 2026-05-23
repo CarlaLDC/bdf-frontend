@@ -28,6 +28,11 @@ interface Reserva {
   referencia?: string;
   total: number;
   items: ReservaItem[];
+  itens?: ReservaItem[];
+  reservationItems?: ReservaItem[];
+  reservaItems?: ReservaItem[];
+  produtos?: ReservaItem[];
+  products?: ReservaItem[];
   clienteNome: string;
   clienteEmail: string;
 }
@@ -61,7 +66,7 @@ export class GerenciarReservasComponent implements OnInit {
     this.http.get<{ message: string; data: Reserva[] }>(`${this.apiUrl}/all`, this.getHeaders())
       .subscribe({
         next: (res) => {
-          this.reservas = (res.data ?? []).filter((reserva) => reserva.status !== 'FINALIZADO');
+          this.reservas = this.normalizarReservas(res.data ?? []);
           this.carregando = false;
         },
         error: (err) => {
@@ -149,13 +154,11 @@ export class GerenciarReservasComponent implements OnInit {
   }
 
   private aplicarReservaAtualizada(reservaAtualizada: Reserva, mensagem: string): void {
-    if (reservaAtualizada.status === 'FINALIZADO') {
-      this.reservas = this.reservas.filter((reserva) => reserva.id !== reservaAtualizada.id);
-    } else {
-      this.reservas = this.reservas.map((reserva) =>
-        reserva.id === reservaAtualizada.id ? reservaAtualizada : reserva
-      );
-    }
+    const reservaNormalizada = this.normalizarReserva(reservaAtualizada);
+
+    this.reservas = this.reservas.map((reserva) =>
+      reserva.id === reservaNormalizada.id ? reservaNormalizada : reserva
+    );
 
     this.mensagem = mensagem;
     this.processandoId = null;
@@ -165,6 +168,82 @@ export class GerenciarReservasComponent implements OnInit {
     console.error(err);
     this.erro = mensagem;
     this.processandoId = null;
+  }
+
+  private normalizarReservas(reservas: Reserva[]): Reserva[] {
+    const reservasPorId = new Map<number, Reserva>();
+
+    for (const reserva of reservas) {
+      const reservaExistente = reservasPorId.get(reserva.id);
+      const reservaNormalizada = this.normalizarReserva(reserva);
+
+      if (!reservaExistente) {
+        reservasPorId.set(reserva.id, reservaNormalizada);
+        continue;
+      }
+
+      reservaExistente.items = this.mesclarItems(reservaExistente.items, reservaNormalizada.items);
+    }
+
+    return Array.from(reservasPorId.values());
+  }
+
+  private normalizarReserva(reserva: Reserva): Reserva {
+    return {
+      ...reserva,
+      items: this.normalizarItems(reserva)
+    };
+  }
+
+  private normalizarItems(reserva: Reserva): ReservaItem[] {
+    const items = reserva.items
+      || reserva.itens
+      || reserva.reservationItems
+      || reserva.reservaItems
+      || reserva.produtos
+      || reserva.products
+      || [];
+
+    const listaItems = Array.isArray(items) ? items : [items];
+    const itemsNormalizados = listaItems
+      .filter(Boolean)
+      .map((item) => this.normalizarItem(item));
+
+    if (itemsNormalizados.length > 0) return itemsNormalizados;
+
+    const itemAvulso = this.normalizarItem(reserva as unknown as ReservaItem);
+    return itemAvulso.productId || itemAvulso.productNome ? [itemAvulso] : [];
+  }
+
+  private normalizarItem(item: any): ReservaItem {
+    const product = item.product || item.produto || {};
+    const quantidade = Number(item.quantidade ?? item.quantity ?? 1);
+    const valorUnitario = Number(item.valorUnitario ?? item.precoUnitario ?? product.preco ?? item.preco ?? 0);
+    const subtotal = Number(item.subtotal ?? item.totalItem ?? valorUnitario * quantidade);
+
+    return {
+      ...item,
+      id: Number(item.id ?? item.itemId ?? item.productId ?? item.produtoId ?? product.id ?? 0),
+      productId: Number(item.productId ?? item.produtoId ?? product.id ?? 0),
+      productNome: item.productNome ?? item.produtoNome ?? product.nome ?? item.nome ?? '',
+      productImagemUrl: item.productImagemUrl ?? item.produtoImagemUrl ?? item.imagemUrl ?? product.imagemUrl ?? '',
+      quantidade,
+      valorUnitario,
+      subtotal
+    };
+  }
+
+  private mesclarItems(itemsAtuais: ReservaItem[], novosItems: ReservaItem[]): ReservaItem[] {
+    const itemsPorChave = new Map<string, ReservaItem>();
+
+    for (const item of [...itemsAtuais, ...novosItems]) {
+      const chave = String(item.id || item.productId || item.productNome);
+      if (chave && !itemsPorChave.has(chave)) {
+        itemsPorChave.set(chave, item);
+      }
+    }
+
+    return Array.from(itemsPorChave.values());
   }
 
   private getHeaders(): { headers: HttpHeaders } {

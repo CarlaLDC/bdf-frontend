@@ -40,7 +40,7 @@
       <p class="titulo-secao">Brinquedos:</p>
       
       <div class="brinquedo-item" *ngFor="let item of reserva.items">
-        <img [src]="item.productImagemUrl || 'assets/images/castelo.png'" [alt]="item.productNome" class="img-brinquedo" onerror="this.src='assets/images/castelo.png'">
+        <img [src]="imagemProduto(item)" [alt]="item.productNome" class="img-brinquedo" (error)="atualizarImagem($event)">
         <div class="detalhes-brinquedo">
           <p class="nome-qtd"><strong>{{ item.quantidade }}X {{ item.productNome }}</strong></p>
           <p class="preco">{{ item.subtotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>

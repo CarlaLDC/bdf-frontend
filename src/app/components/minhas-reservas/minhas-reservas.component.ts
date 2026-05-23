@@ -41,7 +41,7 @@ export class MinhasReservasComponent implements OnInit {
     this.http.get<any>(`${this.apiUrl}/my`, { headers: this.getHeaders() })
       .subscribe({
         next: (res) => {
-          this.reservas = res.data || [];
+          this.reservas = this.normalizarReservas(res.data || []);
           this.carregando = false;
         },
         error: (err) => {
@@ -72,5 +72,89 @@ export class MinhasReservasComponent implements OnInit {
   enderecoCompleto(reserva: any): string {
     return [reserva.rua, reserva.numero, reserva.bairro, reserva.cidade, reserva.estado]
       .filter(Boolean).join(', ');
+  }
+
+  imagemProduto(item: any): string {
+    const imagem = item.productImagemUrl || item.imagemUrl || item.product?.imagemUrl;
+    if (!imagem) return 'assets/images/castelo.png';
+    if (imagem.startsWith('http') || imagem.startsWith('assets/')) return imagem;
+    return `assets/images/${imagem}`;
+  }
+
+  atualizarImagem(event: Event): void {
+    const imagem = event.target as HTMLImageElement;
+    imagem.src = 'assets/images/castelo.png';
+  }
+
+  private normalizarReservas(reservas: any[]): any[] {
+    const reservasPorId = new Map<number, any>();
+
+    for (const reserva of reservas) {
+      const id = Number(reserva.id);
+      const reservaExistente = reservasPorId.get(id);
+      const reservaNormalizada = {
+        ...reserva,
+        items: this.normalizarItems(reserva)
+      };
+
+      if (!reservaExistente) {
+        reservasPorId.set(id, reservaNormalizada);
+        continue;
+      }
+
+      reservaExistente.items = this.mesclarItems(reservaExistente.items, reservaNormalizada.items);
+    }
+
+    return Array.from(reservasPorId.values());
+  }
+
+  private normalizarItems(reserva: any): any[] {
+    const items = reserva.items
+      || reserva.itens
+      || reserva.reservationItems
+      || reserva.reservaItems
+      || reserva.produtos
+      || reserva.products
+      || [];
+
+    const listaItems = Array.isArray(items) ? items : [items];
+    const itemsNormalizados = listaItems
+      .filter(Boolean)
+      .map((item: any) => this.normalizarItem(item));
+
+    if (itemsNormalizados.length > 0) return itemsNormalizados;
+
+    const itemAvulso = this.normalizarItem(reserva);
+    return itemAvulso.productId || itemAvulso.productNome ? [itemAvulso] : [];
+  }
+
+  private normalizarItem(item: any): any {
+    const product = item.product || item.produto || {};
+    const quantidade = Number(item.quantidade ?? item.quantity ?? 1);
+    const valorUnitario = Number(item.valorUnitario ?? item.precoUnitario ?? product.preco ?? item.preco ?? 0);
+    const subtotal = Number(item.subtotal ?? item.totalItem ?? valorUnitario * quantidade);
+
+    return {
+      ...item,
+      productId: Number(item.productId ?? item.produtoId ?? product.id ?? 0),
+      productNome: item.productNome ?? item.produtoNome ?? product.nome ?? item.nome ?? '',
+      productImagemUrl: item.productImagemUrl ?? item.produtoImagemUrl ?? item.imagemUrl ?? product.imagemUrl ?? '',
+      quantidade,
+      valorUnitario,
+      subtotal
+    };
+  }
+
+  private mesclarItems(itemsAtuais: any[], novosItems: any[]): any[] {
+    const itemsPorChave = new Map<string, any>();
+
+    for (const item of [...itemsAtuais, ...novosItems]) {
+      const chave = String(item.id ?? item.productId ?? item.productNome);
+      if (chave && !itemsPorChave.has(chave)) {
+        itemsPorChave.set(chave, item);
+      }
+    }
+
+    return Array.from(itemsPorChave.values());
   }
 }

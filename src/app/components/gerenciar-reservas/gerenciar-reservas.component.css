@@ -78,26 +78,6 @@ main {
   color: #b64646;
 }
 
-.botao-lixeira {
-  align-items: center;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  display: flex;
-  font-size: 46px;
-  height: 60px;
-  justify-content: center;
-  padding: 0;
-  position: absolute;
-  right: 56px;
-  top: 30px;
-  width: 60px;
-}
-
-.botao-lixeira:hover:not(:disabled) {
-  transform: scale(1.05);
-}
-
 .info-reserva h3,
 .brinquedos h3 {
   color: #000000;
@@ -215,8 +195,7 @@ main {
   transform: translateY(-1px);
 }
 
-.acoes button:disabled,
-.botao-lixeira:disabled {
+.acoes button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }
@@ -303,12 +282,6 @@ main {
 
   .reserva-topo h2 {
     font-size: 26px;
-  }
-
-  .botao-lixeira {
-    font-size: 34px;
-    right: 14px;
-    top: 18px;
   }
 
   .linha-info p,
