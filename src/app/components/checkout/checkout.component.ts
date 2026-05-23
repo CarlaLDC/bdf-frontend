@@ -30,8 +30,7 @@ export class CheckoutComponent implements OnInit {
     estado: '',
     numero: '',
     complemento: '',
-    referencia: '',
-    semComplemento: false
+    referencia: ''
   };
 
   aceitaMulta = false;
@@ -96,6 +95,25 @@ export class CheckoutComponent implements OnInit {
       this.erroMensagem = 'Selecione a data da festa.';
       return;
     }
+    const dataEscolhida = new Date(Number(this.dados.ano), Number(this.dados.mes) - 1, Number(this.dados.dia));
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    if (dataEscolhida < hoje) {
+      this.erroMensagem = 'A data escolhida já passou. Selecione uma data futura.';
+      return;
+    }
+    if (!this.dados.horarioMontagem || !this.dados.horarioDesmontagem) {
+      this.erroMensagem = 'Informe os horários de montagem e desmontagem.';
+      return;
+    }
+    const [montagemHoras, montagemMinutos] = this.dados.horarioMontagem.split(':').map(Number);
+    const [desmontagemHoras, desmontagemMinutos] = this.dados.horarioDesmontagem.split(':').map(Number);
+    const tempoMontagem = montagemHoras * 60 + montagemMinutos;
+    const tempoDesmontagem = desmontagemHoras * 60 + desmontagemMinutos;
+    if (tempoMontagem >= tempoDesmontagem) {
+      this.erroMensagem = 'O horário de desmontagem deve ser depois do horário de montagem.';
+      return;
+    }
     if (!this.dados.cep || !this.dados.rua || !this.dados.numero) {
       this.erroMensagem = 'Preencha o endereço completo.';
       return;
@@ -116,7 +134,7 @@ export class CheckoutComponent implements OnInit {
       cidade:       this.dados.cidade,
       estado:       this.dados.estado,
       numero:       this.dados.numero,
-      complemento:  this.dados.semComplemento ? '' : this.dados.complemento,
+      complemento:  this.dados.complemento,
       referencia:   this.dados.referencia,
       total:        this.totalFinal // Enviando o valor total correto para o banco
     };
