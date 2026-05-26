@@ -26,19 +26,19 @@ export class CadastrosComponent {
     tipo: 'CLIENTE'
   };
 
-  // Controle da tela
+  
   isLoading = false;
   errorMessage = '';
   successMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  // Verifica se o email é de administrador
+  // Verificador
   get isAdmin(): boolean {
     return this.cadastroData.email.toLowerCase().endsWith('@admbau.com');
   }
 
-  // Atualiza o tipo 
+   
   onEmailChange() {
     this.cadastroData.tipo = this.isAdmin ? 'ADMIN' : 'CLIENTE';
   }
@@ -53,7 +53,7 @@ export class CadastrosComponent {
     this.cadastroData.cpf = value;
   }
 
-  // Envia o formulário
+  
   onSubmit(form: any): void {
     if (form.invalid) return;
 

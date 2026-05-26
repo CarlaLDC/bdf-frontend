@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CarrinhoService } from '../../services/carrinho/carrinho.service'; // Verifique se o caminho está correto
+import { CarrinhoService } from '../../services/carrinho/carrinho.service'; 
 
 @Component({
   selector: 'app-checkout',
@@ -14,8 +14,8 @@ import { CarrinhoService } from '../../services/carrinho/carrinho.service'; // V
 })
 export class CheckoutComponent implements OnInit {
 
-  // Agora usamos o serviço para os itens e totais
-  taxaOperadores = 50.00; // Ajuste o valor da taxa conforme necessário
+ 
+  taxaOperadores = 350.00; 
 
   dados = {
     ano: new Date().getFullYear().toString(),
@@ -47,7 +47,7 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private http: HttpClient, 
     private router: Router,
-    public carrinhoService: CarrinhoService // Injetando o serviço
+    public carrinhoService: CarrinhoService 
   ) {}
 
   ngOnInit() {
@@ -58,7 +58,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // Getters para facilitar o uso no HTML
+  
   get subtotal() {
     return this.carrinhoService.total;
   }
@@ -136,7 +136,7 @@ export class CheckoutComponent implements OnInit {
       numero:       this.dados.numero,
       complemento:  this.dados.complemento,
       referencia:   this.dados.referencia,
-      total:        this.totalFinal // Enviando o valor total correto para o banco
+      total:        this.totalFinal 
     };
 
     const headers = new HttpHeaders({
