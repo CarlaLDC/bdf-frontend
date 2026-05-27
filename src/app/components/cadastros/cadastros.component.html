@@ -3,19 +3,19 @@
 
   <div class="pagina">
 
-  <!-- Título -->
+ 
   <div class="titulo">
     <h1>Cadastro</h1>
   </div>
 
-  <!-- Card -->
+
   <div class="card">
 
     
-    <!-- Formulário -->
+    
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
 
-      <!-- Nome e Sobrenome -->
+      
       <div class="linha">
         <div class="campo">
           <label>Nome:</label>
@@ -27,7 +27,6 @@
         </div>
       </div>
 
-      <!-- CPF -->
       <div class="linha">
         <div class="campo">
           <label>CPF:</label>
@@ -36,7 +35,6 @@
         <div class="campo vazio"></div>
       </div>
 
-      <!-- Telefone e Celular -->
       <div class="linha">
         <div class="campo">
           <label>Telefone:</label>
@@ -48,7 +46,7 @@
         </div>
       </div>
 
-      <!-- Email -->
+      
       <div class="linha">
         <div class="campo">
           <label>Email:</label>
@@ -59,18 +57,18 @@
         <div class="campo vazio"></div>
       </div>
 
-      <!-- Badge de tipo detectado pelo email -->
+      <!-- mundaça no botão -->
       <div class="badge" [class.admin]="isAdmin">
         <span *ngIf="isAdmin">🔑 Conta de Administrador</span>
         <span *ngIf="!isAdmin">👤 Conta de Cliente</span>
       </div>
 
-      <!-- Aviso admin -->
+      
       <div class="aviso-admin" *ngIf="isAdmin">
         ⚠️ Emails com <strong>&#64;admbau.com</strong> criam contas de <strong>Administrador</strong>.
       </div>
 
-      <!-- Senha e Confirma Senha -->
+      
       <div class="linha">
         <div class="campo">
           <label>Senha:</label>
@@ -82,13 +80,13 @@
         </div>
       </div>
 
-      <!-- Mensagem de erro -->
+      
       <div class="msg-erro" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-      <!-- Mensagem de sucesso -->
+      
       <div class="msg-sucesso" *ngIf="successMessage">{{ successMessage }}</div>
 
-      <!-- Botão -->
+      
       <button type="submit" [disabled]="form.invalid || isLoading" [class.btn-admin]="isAdmin">
         {{ isLoading ? 'Cadastrando...' : isAdmin ? 'Cadastrar como Admin' : 'Cadastrar' }}
       </button>
